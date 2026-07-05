@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title id="pageTitle">应用安装</title>
+    <link rel="stylesheet" href="install.css">
+</head>
+<body>
+    <div class="install-container">
+        <!-- 顶部区域：小火箭图标、评分次数、排行榜 -->
+        <div class="top-section">
+            <div class="app-logo-wrapper">
+                <img src="image/logo.png" class="app-logo" alt="logo" onerror="this.style.display='none'">
+            </div>
+            <div class="top-info">
+                <div class="app-name" id="appName"></div>
+                <div class="rating-info-row">
+                    <div class="star-icon">★</div>
+                    <div class="rating-count" id="ratingCount">210K</div>
+                    <div class="ranking-icon">🏆</div>
+                    <div class="ranking-badge" id="rankingBadge">排行榜No.2</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第二行：Apple授权、版本号、榜单推荐 -->
+        <div class="meta-row">
+            <div class="meta-item">
+                <span class="meta-value" id="appleAuthorized">Apple授权</span>
+            </div>
+            <div class="meta-divider"></div>
+            <div class="meta-item">
+                <span class="meta-value" id="appVersion"></span>
+            </div>
+            <div class="meta-divider"></div>
+            <div class="meta-item">
+                <span class="meta-value" id="recommendedRanking">榜单推荐</span>
+            </div>
+        </div>
+
+        <!-- 第三行：简介、评分、评论 -->
+        <div class="description-section">
+            <div class="description-content">
+                <h2 class="section-title">评论</h2>
+                <div class="comment-text">这款应用真的非常出色！运行流畅无卡顿，画面细腻清晰，操作直观便捷，玩法丰富且极具趣味性。身边的同事都在使用，朋友们不妨也试试看，相信你会爱上它！强烈推荐！</div>
+            </div>
+            <div class="rating-comment-row">
+                <div class="rating-display">
+                    <div class="rating-stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <div class="rating-score" id="ratingScore"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 信息框：信息、版本、语言、版权 -->
+        <div class="info-box">
+           
+            <div class="info-divider"></div>
+            <div class="info-item">
+                <span class="info-label">版本</span>
+                <span class="info-value" id="infoVersion"></span>
+            </div>
+            <div class="info-divider"></div>
+            <div class="info-item">
+                <span class="info-label">语言</span>
+                <span class="info-value" id="appLanguage"></span>
+            </div>
+            <div class="info-divider"></div>
+            <div class="info-item">
+                <span class="info-label">版权</span>
+                <span class="info-value" id="copyright"></span>
+            </div>
+        </div>
+
+        <!-- 安装按钮区域（PC端显示） -->
+        <div class="install-section">
+            <button id="installBtn" class="install-btn">
+                <span class="btn-icon">📱</span>
+                <span>立即安装</span>
+            </button>
+            <div class="install-tip">点击按钮开始安装应用</div>
+        </div>
+
+        <!-- 移动端底部固定按钮栏 -->
+        <div class="mobile-bottom-buttons">
+            <button id="mobileInstallBtn" class="mobile-btn mobile-btn-primary">免费安装</button>
+            <button id="mobileTrustBtn" class="mobile-btn mobile-btn-secondary">去信任</button>
+        </div>
+
+        <!-- 设置信任说明弹窗 -->
+        <div id="trustGuideModal" class="guide-modal" style="display: none;">
+            <div class="modal-overlay"></div>
+            <div class="guide-modal-content">
+                <div class="guide-modal-header">
+                    <h2>设置信任说明</h2>
+                    <button id="closeTrustGuideModal" class="close-btn">×</button>
+                </div>
+                <div class="guide-modal-body">
+                    <p class="guide-text" id="trustGuideText"></p>
+                </div>
+                <div class="guide-modal-footer">
+                    <button id="trustKnowBtn" class="know-btn">知道了</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 信任提示弹窗 -->
+        <div id="trustModal" class="trust-modal" style="display: none;">
+            <div class="modal-overlay"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>⚠️ 需要信任企业开发者</h2>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-text">应用下载完成后，请按照以下步骤信任企业开发者：</p>
+                    <ol class="trust-steps">
+                        <li>打开 <strong>设置</strong> 应用</li>
+                        <li>进入 <strong>通用</strong></li>
+                        <li>找到并点击 <strong>VPN与设备管理</strong></li>
+                        <li>在企业级应用下方，找到企业开发者证书</li>
+                        <li>点击证书名称，然后点击 <strong>"信任"</strong></li>
+                        <li>确认信任后，返回桌面即可使用应用</li>
+                    </ol>
+                    <div class="modal-note">
+                        <p>💡 提示：如果找不到证书，请等待应用下载完成后再操作。</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="closeModal" class="modal-btn">我知道了</button>
+                    <button id="openSettings" class="modal-btn modal-btn-primary">打开设置</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- iOS安装引导模态框（整合安装指南） -->
+        <div id="iosInstallGuideModal" class="guide-modal" style="display: none;">
+            <div class="modal-overlay"></div>
+            <div class="guide-modal-content">
+                <div class="guide-modal-header">
+                    <h2>请在 Safari 浏览器中安装</h2>
+                    <button id="closeIosInstallGuideModal" class="close-btn">×</button>
+                </div>
+                <div class="guide-modal-body">
+                    <!-- 安装步骤 -->
+                    <div class="install-steps-list">
+                        <div class="install-step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content-text" id="iosStep1Text"></div>
+                        </div>
+                        <div class="install-step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content-text" id="iosStep2Text"></div>
+                        </div>
+                        <div class="install-step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content-text" id="iosStep3Text"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="guide-modal-footer" style="display: flex; flex-direction: column; gap: 10px;">
+                    <button id="directInstallBtn" class="know-btn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">立即下载</button>
+                    <div style="display: flex; gap: 10px;">
+                        <button id="openSafariBtn" class="know-btn" style="background: #4caf50; flex: 1; font-size: 13px;">点击跳转Safari浏览器下载</button>
+                        <button id="copyLinkBtn2" class="know-btn copy-link-btn" style="flex: 1;">复制链接</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script>
+        // 动态设置应用信息
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof CONFIG !== 'undefined') {
+                // 设置页面标题
+                const pageTitle = document.getElementById('pageTitle');
+                if (pageTitle) {
+                    pageTitle.textContent = CONFIG.APP_NAME + ' - 安装';
+                }
+                
+                // 设置应用名称
+                const appName = document.getElementById('appName');
+                if (appName && CONFIG.APP_NAME) {
+                    appName.textContent = CONFIG.APP_NAME;
+                }
+                
+                // 设置评分次数（固定显示210K）
+                const ratingCount = document.getElementById('ratingCount');
+                if (ratingCount) {
+                    ratingCount.textContent = '210K';
+                }
+                
+                // 设置排行榜（固定显示排行榜No.2）
+                const rankingBadge = document.getElementById('rankingBadge');
+                if (rankingBadge) {
+                    rankingBadge.textContent = '排行榜No.2';
+                }
+                
+                // 设置版本号（显示为 V1.0.1 格式）
+                const appVersion = document.getElementById('appVersion');
+                if (appVersion) {
+                    appVersion.textContent = 'V' + CONFIG.VERSION;
+                }
+                const infoVersion = document.getElementById('infoVersion');
+                if (infoVersion) {
+                    infoVersion.textContent = CONFIG.VERSION;
+                }
+                
+                
+                // 设置评分
+                const ratingScore = document.getElementById('ratingScore');
+                if (ratingScore) {
+                    ratingScore.textContent = CONFIG.RATING.toFixed(1);
+                }
+                
+                // 设置应用大小
+                const appSize = document.getElementById('appSize');
+                if (appSize && CONFIG.SIZE) {
+                    appSize.textContent = CONFIG.SIZE;
+                }
+                
+                // 设置语言
+                const appLanguage = document.getElementById('appLanguage');
+                if (appLanguage && CONFIG.LANGUAGE) {
+                    appLanguage.textContent = CONFIG.LANGUAGE;
+                }
+                
+                // 设置版权
+                const copyright = document.getElementById('copyright');
+                if (copyright && CONFIG.COPYRIGHT) {
+                    copyright.textContent = CONFIG.COPYRIGHT;
+                }
+                
+                // 设置iOS安装引导模态框中的步骤文本
+                const iosStep1Text = document.getElementById('iosStep1Text');
+                if (iosStep1Text) {
+                    iosStep1Text.textContent = '如果点击立即下载无反应，请点击"点击跳转Safari浏览器下载"按钮 ';
+                }
+                const iosStep2Text = document.getElementById('iosStep2Text');
+                if (iosStep2Text) {
+                    iosStep2Text.textContent = ' 或者选择"复制链接"，然后打开 Safari 浏览器，在地址栏粘贴链接并打开 ';
+                }
+                const iosStep3Text = document.getElementById('iosStep3Text');
+                if (iosStep3Text) {
+                    iosStep3Text.textContent = '安装后如提示"不受信任"，请到"设置＞通用→VPN与设备管理/设备管理"中信任对应企业开发者';
+                }
+                
+                // 设置信任说明文本
+                const trustGuideText = document.getElementById('trustGuideText');
+                if (trustGuideText) {
+                    trustGuideText.innerHTML = '返回手机桌面打开ios系统设置<br>打开设置-通用-VPN与设备管理找到【' + CONFIG.APP_NAME + '】,点击设置信任';
+                }
+            }
+        });
+    </script>
+    <script src="install.js"></script>
+</body>
+</html>

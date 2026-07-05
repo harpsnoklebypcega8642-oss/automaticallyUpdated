@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>小火箭 - 官方下载</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+            /* 关键：防止 iOS 橡皮箝效果干扰连击 */
+            -webkit-overflow-scrolling: touch;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(125deg, #00ff8866, #00ffff66, #ff00ff66);
+            animation: gradientMove 15s ease infinite;
+            z-index: -1;
+            filter: blur(100px);
+            background-size: 400% 400%;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; transform: translateZ(0); }
+            25% { background-position: 100% 50%; transform: translateZ(0); }
+            50% { background-position: 50% 100%; transform: translateZ(0); }
+            75% { background-position: 0% 50%; transform: translateZ(0); }
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 1200px;
+            z-index: 1;
+        }
+
+        /* Logo 触发器样式优化 */
+        .logo-trigger {
+            display: inline-block;
+            touch-action: manipulation;
+            cursor: default;
+            /* 禁用 iOS 长按菜单和选择 */
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 0;
+            pointer-events: none; /* 让事件由父级容器处理 */
+        }
+
+        h1 { font-size: 2em; margin: 20px 0 15px; }
+
+        .download-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+            margin: 30px auto;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .download-button {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            min-width: 200px;
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .android { background: #3DDC84; box-shadow: 0 4px 15px rgba(61, 220, 132, 0.3); }
+        .ios { background: #007AFF; box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3); }
+        .windows { background: #00A4EF; box-shadow: 0 4px 15px rgba(0, 164, 239, 0.3); }
+        .web { background: #FF9900; box-shadow: 0 4px 15px rgba(255, 153, 0, 0.3); }
+        .mobile-web { background: #FF66CC; box-shadow: 0 4px 15px rgba(255, 102, 204, 0.3); }
+
+        .download-button:active { transform: scale(0.95); }
+
+        .button-text { display: flex; flex-direction: column; text-align: left; }
+        .button-text small { font-size: 0.8rem; opacity: 0.9; }
+        .button-text strong { font-size: 1.1rem; }
+
+        /* 特色卡片 */
+        .features { margin-top: 50px; padding: 0 20px; width: 100%; box-sizing: border-box; }
+        .feature-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* 主题切换 */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            z-index: 1000;
+        }
+        
+        body.light-theme { background: #f5f5f5; color: #333; }
+        .light-theme .theme-toggle { color: #333; }
+        .light-theme .feature-card { background: rgba(0,0,0,0.05); }
+
+        @media (max-width: 768px) {
+            .button-row { flex-direction: column; width: 100%; }
+            .download-button { width: 90%; max-width: 280px; margin: 0 auto; }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <button class="theme-toggle" aria-label="切换主题" id="themeBtn">
+        <i class="fas fa-moon" id="themeIcon"></i>
+    </button>
+
+    <div class="container">
+        <!-- 核心修改点：增加 ontouchstart 事件，禁用所有系统干扰 -->
+        <div id="secretTrigger" class="logo-trigger" 
+             ontouchstart="handleSecretClick(event)" 
+             onclick="handleSecretClick(event)">
+            <img src="img/logo.png" alt="小火箭" class="logo">
+        </div>
+        
+        <h1>小火箭</h1>
+        <p>加密聊天即时通讯，随时随地尽情沟通</p>
+
+        <div class="download-buttons">
+              <div class="button-row">
+               
+                <a href="https://h5.xhj.im" class="download-button mobile-web">
+                    <i class="fas fa-mobile-alt fa-2x"></i>
+                    <span class="button-text"><small>手机访问</small><strong>H5版</strong></span>
+                </a>
+            </div>
+            <div class="button-row">
+                <a href="https://download.xhj.im/im.apk" class="download-button android">
+                    <i class="fab fa-android fa-2x"></i>
+                    <span class="button-text"><small>下载安卓版</small><strong>Android</strong></span>
+                </a>
+                <a href="javascript:void(0);" class="download-button ios" onclick="handleIOSDownload(event, './apple/index.html', '1')">
+                    <i class="fab fa-apple fa-2x"></i>
+                    <span class="button-text"><small>下载苹果版</small><strong>iOS 渠道1</strong></span>
+                </a>
+                  <a href="https://testflight.apple.com/join/2M2RCUxc" class="download-button ios">
+                    <i class="fab fa-apple"></i>
+                    <span class="button-text">
+                        <small>下载苹果版</small>
+                        <strong>iOS 渠道2</strong>
+                    </span>
+                </a>
+                <!-- <a href="javascript:void(0);" class="download-button ios" onclick="handleIOSDownload(event, './apple/index.html', '2'); return false;">-->
+                <!--    <i class="fab fa-apple"></i>-->
+                <!--    <span class="button-text">-->
+                <!--        <small>下载苹果版</small>-->
+                <!--        <strong>iOS 渠道2</strong>-->
+                <!--    </span>-->
+                <!--</a>-->
+                <!--<a href="javascript:void(0);" class="download-button ios" onclick="handleIOSDownload(event, './apple/index.html', '3'); return false;">-->
+                <!--    <i class="fab fa-apple"></i>-->
+                <!--    <span class="button-text">-->
+                <!--        <small>下载苹果版</small>-->
+                <!--        <strong>iOS 渠道3</strong>-->
+                <!--    </span>-->
+                <!--</a>-->
+              
+            </div>
+            <div class="button-row">
+                <a href="https://pc.xhj.im" class="download-button web">
+                    <i class="fas fa-globe fa-2x"></i>
+                    <span class="button-text"><small>立即访问</small><strong>网页版</strong></span>
+                </a>
+                 <a href="https://download.xhj.im/im.exe" class="download-button windows">
+                    <i class="fab fa-windows fa-2x"></i>
+                    <span class="button-text"><small>下载PC版</small><strong>Windows</strong></span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="features">
+        <h2>应用特色</h2>
+        <div class="feature-cards">
+            <div class="feature-card"><h3>安全加密</h3><p>端到端加密技术，银行级安全防护</p></div>
+            <div class="feature-card"><h3>极速传输</h3><p>消息秒级送达，文件闪电传输</p></div>
+            <div class="feature-card"><h3>多端同步</h3><p>手机/电脑/全平台消息实时同步</p></div>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 40px 20px; font-size: 0.8em; opacity: 0.6;">
+        <p>© 2025 创颜网络. All rights reserved.</p>
+        <p>Build: 2025.03.31.Internal</p>
+    </footer>
+
+    <script>
+        // --- 核心跳转逻辑 ---
+        function isMobileDevice() {
+            return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        }
+
+        function handleIOSDownload(event, url, channel) {
+            if (event) event.preventDefault();
+            const isMobile = isMobileDevice();
+            let targetUrl = isMobile ? './apple/install.html' : './apple/index.html';
+            if (channel) targetUrl += '?channel=' + channel;
+            window.location.href = targetUrl;
+        }
+
+        // --- 核心隐藏触发器逻辑 (适配 Safari 移动端) ---
+        let logoClickCount = 0;
+        let lastClickTime = 0;
+
+        function handleSecretClick(event) {
+            const currentTime = Date.now();
+            
+            // 移动端 Safari 连击判定优化：如果两次触摸超过 800ms 则视为重置
+            if (currentTime - lastClickTime > 800) {
+                logoClickCount = 0;
+            }
+            
+            lastClickTime = currentTime;
+            logoClickCount++;
+
+            // 达到 5 次触发
+            if (logoClickCount >= 5) {
+                logoClickCount = 0; // 重置
+                
+                // 震动反馈 (部分安卓支持)
+                if (navigator.vibrate) navigator.vibrate(50);
+                
+                // 执行隐藏跳转（渠道2）
+                handleIOSDownload(event, './apple/index.html', '2');
+                
+                // 彻底阻止事件冒泡和后续 click
+                if (event.cancelable) event.preventDefault();
+                event.stopPropagation();
+            }
+        }
+
+        // --- 主题切换逻辑 ---
+        const themeBtn = document.getElementById('themeBtn');
+        const themeIcon = document.getElementById('themeIcon');
+        
+        themeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-theme');
+            const isLight = document.body.classList.contains('light-theme');
+            themeIcon.className = isLight ? 'fas fa-sun' : 'fas fa-moon';
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        });
+
+        // 初始化主题
+        if (localStorage.getItem('theme') === 'light') {
+            document.body.classList.add('light-theme');
+            themeIcon.className = 'fas fa-sun';
+        }
+    </script>
+</body>
+</html>

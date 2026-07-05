@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">应用下载安装</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="pc-container">
+            <div class="app-header">
+                <div class="app-logo-container">
+                    <img src="image/logo.png" class="app-logo" alt="logo" onerror="this.style.display='none'">
+                    <div class="app-rating">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="score" id="ratingScore">5.0</span>
+                    </div>
+                </div>
+                <div class="app-info">
+                    <div class="app-title" id="appTitle">应用名称</div>
+                    <div class="app-version info-strong" id="appVersion">版本：</div>
+                    <!-- <div class="app-size info-strong">大小：44.17M</div> -->
+                    <div class="app-lang info-strong">语言：简体中文</div>
+                    <div class="app-meta">
+                        <!-- <span class="meta-item">年龄分级：4+</span> -->
+                        <span class="meta-item">价格：免费</span>
+                        <span class="meta-item">版权：©2025</span>
+                    </div>
+                </div>
+                <div class="qrcode-block">
+                    <canvas id="qrcode" class="qrcode"></canvas>
+                    <div class="tip">请使用手机扫描二维码下载安装</div>
+                </div>
+            </div>
+
+            <!-- 手机端：显示下载按钮（替代二维码） -->
+            <div class="install-section" id="mobileInstallSection" style="display:none;">
+                <button id="installBtn" class="install-btn">
+                    <span class="btn-icon">📱</span>
+                    <span>立即下载</span>
+                </button>
+                <div class="install-tip">点击按钮开始安装</div>
+            </div>
+          
+            <div class="comment-block">
+                <div class="comment-title">评论</div>
+                <div class="comment-content">
+                    <div class="comment-header">
+                        <div class="comment-rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                        <div class="comment-meta">
+                            <span class="comment-author">Sarah Davis</span>
+                            <span class="comment-date">4 January 2026</span>
+                        </div>
+                    </div>
+                    <div class="comment-text">这款应用真的非常出色！运行流畅无卡顿，画面细腻清晰，操作直观便捷，玩法丰富且极具趣味性。身边的同事都在使用，朋友们不妨也试试看，相信你会爱上它！强烈推荐！</div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+    <!-- 尝试多个CDN源以确保加载成功 -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js" onerror="loadQRCodeFallback()"></script>
+    <script>
+        // 备用CDN加载函数
+        function loadQRCodeFallback() {
+            console.log('主CDN加载失败，尝试备用CDN...');
+            const script = document.createElement('script');
+            script.src = 'https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js';
+            script.onerror = function() {
+                console.error('所有CDN都加载失败');
+                document.querySelector('.tip').textContent = '二维码库加载失败，请检查网络';
+            };
+            document.head.appendChild(script);
+        }
+    </script>
+    <script src="config.js"></script>
+    <script>
+        // 动态设置应用信息
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof CONFIG !== 'undefined') {
+                // 设置页面标题
+                const pageTitle = document.getElementById('pageTitle');
+                if (pageTitle) {
+                    pageTitle.textContent = CONFIG.APP_NAME + ' - 下载安装';
+                }
+                
+                // 设置应用名称
+                const appTitle = document.getElementById('appTitle');
+                if (appTitle) {
+                    appTitle.textContent = CONFIG.APP_NAME;
+                }
+                
+                // 设置版本号
+                const appVersion = document.getElementById('appVersion');
+                if (appVersion) {
+                    appVersion.textContent = '版本：' + CONFIG.VERSION;
+                }
+                
+                // 设置评分
+                const ratingScore = document.getElementById('ratingScore');
+                if (ratingScore) {
+                    ratingScore.textContent = CONFIG.RATING.toFixed(1);
+                }
+            }
+        });
+    </script>
+    <script src="app.js"></script>
+</body>
+</html>
+
