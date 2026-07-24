@@ -1,727 +1,544 @@
-// 使用统一的配置文件
-// 所有配置信息现在都在 config.js 文件中，请修改 config.js 而不是这里
-const appConfig = {
-    manifestUrl: CONFIG.MANIFEST_URL,
-    appName: CONFIG.APP_NAME,
-    version: CONFIG.VERSION
-};
+(function () {
+  const IOS_AUTO_INSTALL_QUERY_KEY = 'autoInstall'
+  const CHANNEL_QUERY_KEY = 'channel'
+  const MANIFEST_PATHS = Object.freeze({
+    '1': '/manifest_channel1.plist',
+    '2': '/manifest_channel2.plist',
+    '3': '/manifest_channel3.plist',
+  })
 
-// 获取当前域名（用于生成manifest.plist的URL）
-function getBaseUrl() {
-    return window.location.origin;
-}
+  let hasHandledAutoInstall = false
 
-// 检测是否为iOS设备
-function isIOSDevice() {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    return /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
-}
+  function getCurrentChannel() {
+    return new URLSearchParams(window.location.search).get(CHANNEL_QUERY_KEY) || '1'
+  }
 
-// 检测是否为Safari浏览器
-function isSafariBrowser() {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    const isIOS = isIOSDevice();
-    
-    if (isIOS) {
-        // iOS设备上的浏览器检测
-        // Safari的User-Agent通常包含"Safari"但不包含其他浏览器的标识
-        const isChrome = /CriOS/i.test(userAgent);
-        const isFirefox = /FxiOS/i.test(userAgent);
-        const isUC = /UCBrowser/i.test(userAgent);
-        const isQQ = /QQBrowser/i.test(userAgent);
-        const isWeChat = /MicroMessenger/i.test(userAgent);
-        const isEdge = /EdgiOS/i.test(userAgent);
-        const isOpera = /OPiOS/i.test(userAgent);
-        
-        // 如果检测到其他浏览器，肯定不是Safari
-        if (isChrome || isFirefox || isUC || isQQ || isWeChat || isEdge || isOpera) {
-            return false;
-        }
-        
-        // iOS Safari的User-Agent通常包含"Safari"和"Version"，但不包含"CriOS"等
-        // 或者通过检查navigator.vendor来判断（Safari的vendor通常是"Apple Computer, Inc."）
-        const vendor = navigator.vendor || '';
-        const isAppleVendor = /apple/i.test(vendor);
-        const hasSafari = /Safari/i.test(userAgent);
-        const hasVersion = /Version/i.test(userAgent);
-        
-        // iOS Safari通常满足：vendor包含Apple，User-Agent包含Safari和Version
-        return isAppleVendor && hasSafari && hasVersion;
-    }
-    
-    // 非iOS设备上的Safari检测
-    const isSafari = /^((?!chrome|android).)*safari/i.test(userAgent);
-    return isSafari;
-}
+  function getManifestPath(channel) {
+    return MANIFEST_PATHS[channel] || '/manifest.plist'
+  }
 
-// 生成安装URL（使用itms-services协议）
-function generateInstallUrl() {
-    // 获取当前域名
-    const baseUrl = getBaseUrl();
-    
-    // 从URL参数中获取渠道信息
-    const urlParams = new URLSearchParams(window.location.search);
-    const channel = urlParams.get('channel') || '1'; // 默认为渠道1
-    
-    // 根据渠道选择不同的manifest文件
-    const manifestMap = {
-        '1': 'manifest_channel1.plist',
-        '2': 'manifest_channel2.plist',
-        '3': 'manifest_channel3.plist',
-    };
-    const manifestFile = manifestMap[channel] || manifestMap['1'];
-    const manifestUrl = baseUrl + '/' + manifestFile;
-    
-    // 使用itms-services协议实现一键安装
-    const installUrl = `itms-services://?action=download-manifest&url=${encodeURIComponent(manifestUrl)}`;
-    return installUrl;
-}
+  function buildManifestUrl(channel) {
+    return new URL(getManifestPath(channel), window.location.origin).toString()
+  }
 
-// 显示信任提示弹窗
-function showTrustModal() {
-    const modal = document.getElementById('trustModal');
-    if (modal) {
-        modal.style.display = 'flex';
-        // 防止背景滚动
-        document.body.style.overflow = 'hidden';
-    }
-}
+  function buildInstallUrl(channel) {
+    return `itms-services://?action=download-manifest&url=${encodeURIComponent(buildManifestUrl(channel))}`
+  }
 
-// 隐藏信任提示弹窗
-function hideTrustModal() {
-    const modal = document.getElementById('trustModal');
-    if (modal) {
-        modal.style.display = 'none';
-        // 恢复背景滚动
-        document.body.style.overflow = '';
-    }
-}
+  function buildCurrentInstallPageUrl(channel, locale, autoInstall) {
+    const url = new URL(window.location.href)
+    url.searchParams.set(CHANNEL_QUERY_KEY, channel)
+    url.searchParams.set('lang', locale)
 
-// 显示信任说明弹窗
-function showTrustGuideModal() {
-    const modal = document.getElementById('trustGuideModal');
-    if (modal) {
-        modal.style.display = 'flex';
-        // 防止背景滚动
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-// 隐藏信任说明弹窗
-function hideTrustGuideModal() {
-    const modal = document.getElementById('trustGuideModal');
-    if (modal) {
-        modal.style.display = 'none';
-        // 恢复背景滚动
-        document.body.style.overflow = '';
-    }
-}
-
-// 显示iOS安装引导模态框（整合安装指南）
-function showIosInstallGuideModal(isSafari = false) {
-    const modal = document.getElementById('iosInstallGuideModal');
-    if (!modal) return;
-    
-    // 统一显示所有按钮，不再根据浏览器类型隐藏
-    modal.style.display = 'flex';
-    // 防止背景滚动
-    document.body.style.overflow = 'hidden';
-}
-
-// 隐藏iOS安装引导模态框
-function hideIosInstallGuideModal() {
-    const modal = document.getElementById('iosInstallGuideModal');
-    if (modal) {
-        modal.style.display = 'none';
-        // 恢复背景滚动
-        document.body.style.overflow = '';
-    }
-}
-
-// 跳转到Safari浏览器
-function openInSafari() {
-    let currentUrl = window.location.href;
-    const isIOS = isIOSDevice();
-    
-    if (!isIOS) {
-        // 非iOS设备，提示用户
-        alert('此功能仅支持iOS设备');
-        return;
-    }
-    
-    // 在URL中添加自动下载参数
-    const urlObj = new URL(currentUrl);
-    urlObj.searchParams.set('autoInstall', 'true');
-    currentUrl = urlObj.toString();
-    
-    // iOS设备：尝试打开Safari浏览器
-    // 注意：iOS上无法直接检测协议是否成功，所以尝试多种协议
-    const urlWithoutProtocol = currentUrl.replace(/^https?:\/\//, '');
-    
-    // 方法1：使用 x-safari-https:// 协议（iOS 9+，最常用）
-    try {
-        window.location.href = 'x-safari-https://' + urlWithoutProtocol;
-    } catch (e1) {
-        // 方法2：使用 safari-https:// 协议
-        try {
-            window.location.href = 'safari-https://' + urlWithoutProtocol;
-        } catch (e2) {
-            // 方法3：使用 safari:// 协议
-            try {
-                window.location.href = 'safari://' + currentUrl;
-            } catch (e3) {
-                // 如果所有方法都失败，提示用户手动打开
-                alert('无法自动跳转到Safari浏览器，请手动打开Safari浏览器访问此页面。');
-            }
-        }
-    }
-}
-
-// 复制当前页面链接到剪贴板
-function copyCurrentLink() {
-    const currentUrl = window.location.href;
-    
-    // 使用现代Clipboard API
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(currentUrl).then(function() {
-            // 显示复制成功提示
-            showCopySuccessTip();
-        }).catch(function(err) {
-            console.error('复制失败:', err);
-            // 如果Clipboard API失败，使用备用方法
-            fallbackCopyTextToClipboard(currentUrl);
-        });
+    if (autoInstall) {
+      url.searchParams.set(IOS_AUTO_INSTALL_QUERY_KEY, 'true')
     } else {
-        // 使用备用方法
-        fallbackCopyTextToClipboard(currentUrl);
+      url.searchParams.delete(IOS_AUTO_INSTALL_QUERY_KEY)
     }
-}
 
-// 备用复制方法
-function fallbackCopyTextToClipboard(text) {
-    const textArea = document.createElement('textarea');
-    textArea.value = text;
-    textArea.style.position = 'fixed';
-    textArea.style.top = '0';
-    textArea.style.left = '0';
-    textArea.style.width = '2em';
-    textArea.style.height = '2em';
-    textArea.style.padding = '0';
-    textArea.style.border = 'none';
-    textArea.style.outline = 'none';
-    textArea.style.boxShadow = 'none';
-    textArea.style.background = 'transparent';
-    
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    
+    return url.toString()
+  }
+
+  function isIOSDevice() {
+    const userAgent = window.navigator.userAgent || window.navigator.vendor || window.opera || ''
+    const isLegacyIOS = /iPad|iPhone|iPod/i.test(userAgent)
+    const isModernIpad = window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1
+
+    return (isLegacyIOS || isModernIpad) && !window.MSStream
+  }
+
+  function detectBrowserEnvironment() {
+    const userAgent = window.navigator.userAgent || window.navigator.vendor || window.opera || ''
+    const vendor = window.navigator.vendor || ''
+    const isIOS = isIOSDevice()
+    const browserFlags = {
+      isChrome: /CriOS/i.test(userAgent),
+      isFirefox: /FxiOS/i.test(userAgent),
+      isUC: /UCBrowser/i.test(userAgent),
+      isQQ: /(QQBrowser|MQQBrowser|QQ\/)/i.test(userAgent),
+      isWeChat: /MicroMessenger/i.test(userAgent),
+      isEdge: /EdgiOS/i.test(userAgent),
+      isOpera: /OPiOS/i.test(userAgent),
+    }
+    const isSafari =
+      isIOS &&
+      !Object.values(browserFlags).some(Boolean) &&
+      /apple/i.test(vendor) &&
+      /Safari/i.test(userAgent) &&
+      /Version/i.test(userAgent)
+
+    let browserName = 'Browser'
+
+    if (isSafari) {
+      browserName = 'Safari'
+    } else if (browserFlags.isWeChat) {
+      browserName = 'WeChat'
+    } else if (browserFlags.isQQ) {
+      browserName = 'QQ Browser'
+    } else if (browserFlags.isChrome) {
+      browserName = 'Chrome'
+    } else if (browserFlags.isFirefox) {
+      browserName = 'Firefox'
+    } else if (browserFlags.isEdge) {
+      browserName = 'Edge'
+    } else if (browserFlags.isOpera) {
+      browserName = 'Opera'
+    } else if (browserFlags.isUC) {
+      browserName = 'UC Browser'
+    }
+
+    return {
+      isIOS,
+      isSafari,
+      browserName,
+    }
+  }
+
+  function triggerIOSInstall(channel) {
+    const link = document.createElement('a')
+    link.href = buildInstallUrl(channel)
+    link.style.display = 'none'
+    document.body.appendChild(link)
+    link.click()
+
+    window.setTimeout(() => {
+      if (link.parentNode) {
+        link.parentNode.removeChild(link)
+      }
+    }, 120)
+  }
+
+  function fallbackCopyToClipboard(text) {
+    const textArea = document.createElement('textarea')
+    textArea.value = text
+    textArea.setAttribute('readonly', 'true')
+    textArea.style.position = 'fixed'
+    textArea.style.opacity = '0'
+    document.body.appendChild(textArea)
+    textArea.select()
+    document.execCommand('copy')
+    document.body.removeChild(textArea)
+  }
+
+  async function copyCurrentLink(locale, statusMessage) {
+    const installPageUrl = buildCurrentInstallPageUrl(getCurrentChannel(), locale, true)
+
+    if (window.navigator.clipboard?.writeText) {
+      try {
+        await window.navigator.clipboard.writeText(installPageUrl)
+        return true
+      } catch {
+        // Fall back to textarea copy below when clipboard permissions are unavailable.
+      }
+    }
+
     try {
-        const successful = document.execCommand('copy');
-        if (successful) {
-            showCopySuccessTip();
-        } else {
-            alert('复制失败，请手动复制链接：' + text);
-        }
-    } catch (err) {
-        console.error('复制失败:', err);
-        alert('复制失败，请手动复制链接：' + text);
+      fallbackCopyToClipboard(installPageUrl)
+      return true
+    } catch {
+      return false
+    } finally {
+      if (statusMessage) {
+        setStatus(statusMessage)
+      }
     }
-    
-    document.body.removeChild(textArea);
-}
+  }
 
-// 显示复制成功提示
-function showCopySuccessTip() {
-    // 创建提示元素
-    const tip = document.createElement('div');
-    tip.textContent = '链接已复制到剪贴板！';
-    tip.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(0, 0, 0, 0.8);
-        color: white;
-        padding: 16px 24px;
-        border-radius: 8px;
-        font-size: 16px;
-        z-index: 10002;
-        animation: fadeInOut 2s ease;
-    `;
-    
-    // 添加动画样式
-    if (!document.getElementById('copyTipStyle')) {
-        const style = document.createElement('style');
-        style.id = 'copyTipStyle';
-        style.textContent = `
-            @keyframes fadeInOut {
-                0% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
-                20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-                80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-                100% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
-            }
-        `;
-        document.head.appendChild(style);
+  function openCurrentPageInSafari(channel, locale) {
+    if (!isIOSDevice()) {
+      return false
     }
-    
-    document.body.appendChild(tip);
-    
-    // 2秒后移除提示
-    setTimeout(function() {
-        if (tip.parentNode) {
-            tip.parentNode.removeChild(tip);
-        }
-    }, 2000);
-}
 
-// 打开iOS设置
-function openSettings() {
-    // iOS 8+ 可以使用 App-Prefs 协议打开设置
-    // 但更可靠的方式是提示用户手动打开
+    const currentUrl = buildCurrentInstallPageUrl(channel, locale, true)
+    const urlWithoutProtocol = currentUrl.replace(/^https?:\/\//i, '')
+
     try {
-        // 尝试打开设置应用
-        window.location.href = 'App-Prefs:root=General&path=ManagedConfigurationList';
-    } catch (e) {
-        // 如果失败，显示提示
-        alert('请手动打开"设置"应用，然后进入"通用 > VPN与设备管理"');
+      window.location.href = `x-safari-https://${urlWithoutProtocol}`
+      return true
+    } catch {
+      try {
+        window.location.href = `safari-https://${urlWithoutProtocol}`
+        return true
+      } catch {
+        window.location.href = `safari://${currentUrl}`
+        return true
+      }
     }
-    hideTrustModal();
-}
+  }
 
-// 初始化安装按钮
-function setupInstallButton() {
-    const installBtn = document.getElementById('installBtn');
-    if (!installBtn) {
-        console.error('未找到安装按钮');
-        return;
+  function setStatus(message) {
+    const statusNode = document.getElementById('status-message')
+
+    if (statusNode) {
+      statusNode.textContent = message || ''
     }
-    
-    installBtn.addEventListener('click', function() {
-        const isIOS = isIOSDevice();
-        
-        if (!isIOS) {
-            // 非iOS设备显示提示
-            alert('此应用仅支持iOS设备，请使用iPhone访问');
-            return;
+  }
+
+  function createContent(environment, content, channel) {
+    if (environment.isIOS && environment.isSafari) {
+      return {
+        channelLabel: content.channelLabel(channel),
+        title: content.installReadyTitle,
+        description: content.installReadyDescription(environment),
+        envBanner: content.envBanner(environment),
+        steps: content.readySteps,
+        note: content.readyNote,
+        primaryLabel: content.installNowLabel,
+        copyLabel: content.copyLinkLabel,
+        openSafariLabel: content.openSafariLabel,
+        showOpenSafari: false,
+        mode: 'ready',
+      }
+    }
+
+    if (environment.isIOS) {
+      return {
+        channelLabel: content.channelLabel(channel),
+        title: content.installSwitchTitle,
+        description: content.installSwitchDescription(environment),
+        envBanner: content.envBanner(environment),
+        steps: content.switchSteps,
+        note: content.switchNote,
+        primaryLabel: content.tryInstallLabel,
+        copyLabel: content.copyLinkLabel,
+        openSafariLabel: content.openSafariLabel,
+        showOpenSafari: true,
+        mode: 'switch',
+      }
+    }
+
+    return {
+      channelLabel: content.channelLabel(channel),
+      title: content.installDesktopTitle,
+      description: content.installDesktopDescription,
+      envBanner: content.desktopBanner,
+      steps: content.desktopSteps,
+      note: content.desktopNote,
+      primaryLabel: content.copyPhoneLinkLabel,
+      copyLabel: content.copyLinkLabel,
+      openSafariLabel: content.openSafariLabel,
+      showOpenSafari: false,
+      mode: 'desktop',
+    }
+  }
+
+  function bindActions(pageContent, locale, content) {
+    const channel = getCurrentChannel()
+    const primaryButton = document.getElementById('primary-action')
+    const copyButton = document.getElementById('copy-link')
+    const openSafariButton = document.getElementById('open-safari')
+    const environment = detectBrowserEnvironment()
+
+    primaryButton.onclick = async function () {
+      if (pageContent.mode === 'desktop') {
+        const copied = await copyCurrentLink(locale)
+        setStatus(copied ? content.copySuccessStatus : content.copyFailureStatus)
+        return
+      }
+
+      if (primaryButton.disabled) {
+        return
+      }
+
+      let downloadSuccess = false
+      let timeoutId = null
+      let handlersRemoved = false
+      const originalText = primaryButton.textContent
+      const isSafari = environment.isSafari
+
+      const setLoadingState = function () {
+        primaryButton.disabled = true
+        primaryButton.style.opacity = '0.7'
+        primaryButton.style.cursor = 'not-allowed'
+        primaryButton.textContent = content.installPendingLabel
+      }
+
+      const resetButtonState = function () {
+        primaryButton.disabled = false
+        primaryButton.style.opacity = ''
+        primaryButton.style.cursor = ''
+        primaryButton.textContent = originalText
+      }
+
+      const cleanup = function () {
+        if (!handlersRemoved) {
+          document.removeEventListener('visibilitychange', visibilityHandler)
+          window.removeEventListener('blur', blurHandler)
+          handlersRemoved = true
         }
-        
-        // iOS设备：检测浏览器类型
-        const isSafari = isSafariBrowser();
-        
-        if (isSafari) {
-            // Safari浏览器：直接触发安装
-            const installUrl = generateInstallUrl();
-            try {
-                triggerIOSInstall(installUrl);
-            } catch (e) {
-                console.error('安装失败:', e);
-                alert('安装失败，请重试');
-            }
-        } else {
-            // 其他浏览器：显示弹窗提示
-            showIosInstallGuideModal();
+
+        if (timeoutId) {
+          window.clearTimeout(timeoutId)
+          timeoutId = null
         }
-    });
-}
+      }
 
-// 初始化弹窗按钮
-function setupModalButtons() {
-    const closeModal = document.getElementById('closeModal');
-    const openSettingsBtn = document.getElementById('openSettings');
-    const modal = document.getElementById('trustModal');
-    
-    if (closeModal) {
-        closeModal.addEventListener('click', hideTrustModal);
-    }
-    
-    if (openSettingsBtn) {
-        openSettingsBtn.addEventListener('click', function() {
-            openSettings();
-        });
-    }
-    
-    // 点击遮罩层关闭弹窗
-    if (modal) {
-        const overlay = modal.querySelector('.modal-overlay');
-        if (overlay) {
-            overlay.addEventListener('click', hideTrustModal);
-        }
-    }
-}
-
-// 初始化信任说明弹窗按钮
-function setupTrustGuideModalButtons() {
-    const closeTrustGuideModal = document.getElementById('closeTrustGuideModal');
-    const trustKnowBtn = document.getElementById('trustKnowBtn');
-    const trustGuideModal = document.getElementById('trustGuideModal');
-    
-    if (closeTrustGuideModal) {
-        closeTrustGuideModal.addEventListener('click', hideTrustGuideModal);
-    }
-    
-    if (trustKnowBtn) {
-        trustKnowBtn.addEventListener('click', hideTrustGuideModal);
-    }
-    
-    // 点击遮罩层关闭弹窗
-    if (trustGuideModal) {
-        const overlay = trustGuideModal.querySelector('.modal-overlay');
-        if (overlay) {
-            overlay.addEventListener('click', hideTrustGuideModal);
-        }
-    }
-}
-
-// 初始化iOS安装引导模态框按钮
-function setupIosInstallGuideModalButtons() {
-    const closeIosInstallGuideModal = document.getElementById('closeIosInstallGuideModal');
-    const directInstallBtn = document.getElementById('directInstallBtn');
-    const tryInstallBtn = document.getElementById('tryInstallBtn');
-    const openSafariBtn = document.getElementById('openSafariBtn');
-    const copyLinkBtn2 = document.getElementById('copyLinkBtn2');
-    const iosInstallGuideModal = document.getElementById('iosInstallGuideModal');
-    
-    if (closeIosInstallGuideModal) {
-        closeIosInstallGuideModal.addEventListener('click', hideIosInstallGuideModal);
-    }
-    
-    // 立即下载按钮
-    if (directInstallBtn) {
-        directInstallBtn.addEventListener('click', function() {
-            // 防止重复点击
-            if (directInstallBtn.disabled) {
-                return;
-            }
-            
-            const installUrl = generateInstallUrl();
-            let downloadSuccess = false;
-            let timeoutId = null;
-            let handlersRemoved = false;
-            const originalText = directInstallBtn.textContent;
-            
-            // 设置按钮为加载状态
-            const setLoadingState = function() {
-                directInstallBtn.disabled = true;
-                directInstallBtn.style.opacity = '0.7';
-                directInstallBtn.style.cursor = 'not-allowed';
-                directInstallBtn.textContent = '下载中...';
-            };
-            
-            // 恢复按钮状态
-            const resetButtonState = function() {
-                directInstallBtn.disabled = false;
-                directInstallBtn.style.opacity = '';
-                directInstallBtn.style.cursor = '';
-                directInstallBtn.textContent = originalText;
-            };
-            
-            // 清理函数
-            const cleanup = function() {
-                if (!handlersRemoved) {
-                    document.removeEventListener('visibilitychange', visibilityHandler);
-                    window.removeEventListener('blur', blurHandler);
-                    handlersRemoved = true;
-                }
-                if (timeoutId) {
-                    clearTimeout(timeoutId);
-                    timeoutId = null;
-                }
-            };
-            
-            // 检测下载是否成功的标志
-            const checkDownloadSuccess = function() {
-                // 如果页面变为不可见，可能表示下载成功（系统弹出了安装对话框）
-                if (document.hidden) {
-                    downloadSuccess = true;
-                    cleanup();
-                    // 下载成功，恢复按钮状态
-                    resetButtonState();
-                }
-            };
-            
-            // 监听页面可见性变化
-            const visibilityHandler = function() {
-                checkDownloadSuccess();
-            };
-            
-            // 监听窗口失去焦点
-            const blurHandler = function() {
-                checkDownloadSuccess();
-            };
-            
-            // 设置加载状态
-            setLoadingState();
-            
-            // 添加事件监听器
-            document.addEventListener('visibilitychange', visibilityHandler);
-            window.addEventListener('blur', blurHandler);
-            
-            try {
-                // 触发安装
-                triggerIOSInstall(installUrl);
-                
-                // 6秒后检测是否成功
-                timeoutId = setTimeout(function() {
-                    cleanup();
-                    
-                    // 恢复按钮状态
-                    resetButtonState();
-                    
-                    // 如果6秒后仍然没有成功，提示用户
-                    if (!downloadSuccess) {
-                        // 显示提示，引导用户使用 Safari
-                        const isSafari = isSafariBrowser();
-                        if (!isSafari) {
-                            // 如果不是Safari浏览器，提示用户使用Safari
-                            if (confirm('当前浏览器可能不支持直接安装。\n\n是否跳转到Safari浏览器进行安装？')) {
-                                // 用户确认，跳转到Safari
-                                hideIosInstallGuideModal();
-                                openInSafari();
-                            }
-                        } else {
-                            // 如果是Safari但仍然失败，提示用户
-                            alert('下载可能未成功启动。\n\n请检查网络连接，或稍后重试。\n\n您也可以点击"点击跳转Safari浏览器下载"按钮重试。');
-                        }
-                    }
-                }, 6000);
-                
-            } catch (e) {
-                cleanup();
-                resetButtonState();
-                
-                console.error('安装失败:', e);
-                // 如果捕获到错误，直接提示用户
-                const isSafari = isSafariBrowser();
-                if (!isSafari) {
-                    if (confirm('当前浏览器不支持直接安装。\n\n是否跳转到Safari浏览器进行安装？')) {
-                        hideIosInstallGuideModal();
-                        openInSafari();
-                    }
-                } else {
-                    alert('安装失败，请重试');
-                }
-            }
-        });
-    }
-    
-    // 跳转Safari浏览器下载按钮
-    if (openSafariBtn) {
-        openSafariBtn.addEventListener('click', function() {
-            const isIOS = isIOSDevice();
-            const isSafari = isSafariBrowser();
-            
-            if (!isIOS) {
-                // 非iOS设备，提示用户
-                alert('此功能仅支持iOS设备');
-                return;
-            }
-            
-            if (isSafari) {
-                // 如果已经是Safari浏览器，直接触发下载
-                const installUrl = generateInstallUrl();
-                try {
-                    triggerIOSInstall(installUrl);
-                    // 关闭弹窗
-                    hideIosInstallGuideModal();
-                } catch (e) {
-                    console.error('安装失败:', e);
-                    alert('安装失败，请重试');
-                }
-            } else {
-                // 如果不是Safari浏览器，关闭弹窗并尝试跳转到Safari
-                hideIosInstallGuideModal();
-                // 尝试跳转到Safari浏览器
-                openInSafari();
-            }
-        });
-    }
-    
-    // 复制链接按钮
-    if (copyLinkBtn2) {
-        copyLinkBtn2.addEventListener('click', function() {
-            copyCurrentLink();
-        });
-    }
-    
-    // 点击遮罩层关闭弹窗
-    if (iosInstallGuideModal) {
-        const overlay = iosInstallGuideModal.querySelector('.modal-overlay');
-        if (overlay) {
-            overlay.addEventListener('click', hideIosInstallGuideModal);
-        }
-    }
-}
-
-// 设置安装按钮状态（保持按钮为"免费安装"）
-function setInstallButtonState(state) {
-    const mobileInstallBtn = document.getElementById('mobileInstallBtn');
-    if (!mobileInstallBtn) return;
-    
-    // 按钮始终显示"免费安装"
-    mobileInstallBtn.textContent = '免费安装';
-    mobileInstallBtn.disabled = false;
-    localStorage.removeItem('installStatus');
-}
-
-// 触发iOS安装（使用a标签点击方式，确保能弹出系统安装弹框）
-function triggerIOSInstall(installUrl) {
-    // 创建一个隐藏的a标签并触发点击
-    const link = document.createElement('a');
-    link.href = installUrl;
-    link.style.display = 'none';
-    document.body.appendChild(link);
-    
-    // 触发点击事件
-    link.click();
-    
-    // 清理：延迟移除元素，确保点击事件完成
-    setTimeout(function() {
-        document.body.removeChild(link);
-    }, 100);
-}
-
-// 初始化移动端底部按钮
-function setupMobileButtons() {
-    const mobileInstallBtn = document.getElementById('mobileInstallBtn');
-    const mobileTrustBtn = document.getElementById('mobileTrustBtn');
-    
-    // 免费安装按钮
-    if (mobileInstallBtn) {
-        mobileInstallBtn.addEventListener('click', function() {
-            const isIOS = isIOSDevice();
-            
-            if (!isIOS) {
-                // 非iOS设备，跳转Android下载
-                if (typeof CONFIG !== 'undefined' && CONFIG.ANDROID_DOWNLOAD_URL) {
-                    window.location.href = CONFIG.ANDROID_DOWNLOAD_URL;
-                } else {
-                    alert('此应用仅支持iOS设备，请使用iPhone访问');
-                }
-                return;
-            }
-            
-            // iOS设备：检测浏览器类型
-            const isSafari = isSafariBrowser();
-            
-            if (isSafari) {
-                // Safari浏览器：直接触发安装
-                const installUrl = generateInstallUrl();
-                try {
-                    triggerIOSInstall(installUrl);
-                } catch (e) {
-                    console.error('安装失败:', e);
-                    alert('安装失败，请重试');
-                }
-            } else {
-                // 其他浏览器：显示弹窗提示，同时尝试触发下载
-                const installUrl = generateInstallUrl();
-                try {
-                    // 尝试通过隐藏<a>标签触发下载
-                    triggerIOSInstall(installUrl);
-                } catch (e) {
-                    console.error('尝试下载失败:', e);
-                    // 即使失败也继续显示弹窗
-                }
-                // 显示弹窗提示
-                showIosInstallGuideModal();
-            }
-        });
-    }
-    
-    // 去信任按钮
-    if (mobileTrustBtn) {
-        mobileTrustBtn.addEventListener('click', function() {
-            showTrustGuideModal();
-        });
-    }
-}
-
-// 页面加载完成后初始化
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('安装页面加载完成');
-    
-    // 检测设备类型
-    const isIOS = isIOSDevice();
-    const isSafari = isSafariBrowser();
-    
-    // 检查URL参数，如果是自动安装模式且在Safari浏览器中，自动触发下载
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('autoInstall') === 'true' && isIOS && isSafari) {
-        // 延迟一下，确保页面完全加载
-        setTimeout(function() {
-            const installUrl = generateInstallUrl();
-            try {
-                triggerIOSInstall(installUrl);
-                console.log('自动触发下载');
-            } catch (e) {
-                console.error('自动下载失败:', e);
-            }
-        }, 500);
-    }
-    
-    if (!isIOS) {
-        // 非iOS设备显示提示
-        const installBtn = document.getElementById('installBtn');
-        const installTip = document.querySelector('.install-tip');
-        
-        if (installBtn) {
-            installBtn.style.opacity = '0.6';
-            installBtn.style.cursor = 'not-allowed';
-        }
-        
-        if (installTip) {
-            installTip.textContent = '此应用仅支持iOS设备，请使用iPhone访问';
-            installTip.style.color = '#ff9800';
-        }
-    }
-    
-    // 初始化按钮
-    setupInstallButton();
-    setupModalButtons();
-    setupTrustGuideModalButtons();
-    setupIosInstallGuideModalButtons();
-    setupMobileButtons();
-    
-    // 检查URL参数，如果是从安装后返回的，可以显示特殊提示
-    if (urlParams.get('installed') === 'true') {
-        setTimeout(function() {
-            showTrustModal();
-        }, 1000);
-    }
-});
-
-// 处理用户点击itms-services弹框安装后的状态变化
-function handleInstallConfirm() {
-    const waitingForConfirm = sessionStorage.getItem('waitingForInstallConfirm');
-    
-    if (waitingForConfirm === 'true') {
-        // 用户已经在itms-services弹框中点击了安装，现在返回页面
-        // 显示iOS安装引导弹窗
-        showIosInstallGuideModal();
-        // 清除等待标记
-        sessionStorage.removeItem('waitingForInstallConfirm');
-        return true; // 表示已经处理了安装确认
-    }
-    return false;
-}
-
-// 处理页面可见性变化（用户切换应用后返回）
-document.addEventListener('visibilitychange', function() {
-    if (!document.hidden) {
-        // 页面重新可见时，检查是否等待用户点击安装确认
-        handleInstallConfirm();
-    }
-});
-
-// 处理窗口焦点变化（备用检测方式）
-window.addEventListener('focus', function() {
-    // 延迟一下，避免与visibilitychange事件重复处理
-    setTimeout(function() {
-        // 如果visibilitychange已经处理了，这里不会重复处理
+      const checkDownloadSuccess = function () {
         if (!document.hidden) {
-            handleInstallConfirm();
+          return
         }
-    }, 100);
-});
 
+        downloadSuccess = true
+        cleanup()
+        resetButtonState()
+      }
+
+      const visibilityHandler = function () {
+        checkDownloadSuccess()
+      }
+
+      const blurHandler = function () {
+        checkDownloadSuccess()
+      }
+
+      const promptFallback = function () {
+        if (!isSafari) {
+          if (window.confirm(content.unsupportedBrowserConfirm)) {
+            openCurrentPageInSafari(channel, locale)
+          }
+
+          return
+        }
+
+        window.alert(content.installTimeoutAlert)
+      }
+
+      setLoadingState()
+      document.addEventListener('visibilitychange', visibilityHandler)
+      window.addEventListener('blur', blurHandler)
+
+      try {
+        triggerIOSInstall(channel)
+        setStatus(content.installAttemptStatus)
+
+        timeoutId = window.setTimeout(function () {
+          cleanup()
+          resetButtonState()
+
+          if (!downloadSuccess) {
+            setStatus(content.installFailureStatus)
+            promptFallback()
+          }
+        }, 6000)
+      } catch {
+        cleanup()
+        resetButtonState()
+        setStatus(content.installFailureStatus)
+        promptFallback()
+      }
+    }
+
+    copyButton.onclick = async function () {
+      const copied = await copyCurrentLink(locale)
+      setStatus(copied ? content.copySuccessStatus : content.copyFailureStatus)
+    }
+
+    openSafariButton.onclick = function () {
+      const opened = openCurrentPageInSafari(channel, locale)
+      setStatus(opened ? content.openSafariStatus : content.onlyIOSStatus)
+    }
+  }
+
+  function renderTrustSteps(content) {
+    const trustList = document.getElementById('trust-list')
+    trustList.innerHTML = ''
+
+    content.trustSteps.forEach((step) => {
+      const item = document.createElement('li')
+      item.textContent = step
+      trustList.appendChild(item)
+    })
+  }
+
+  function renderStepList(steps) {
+    const stepsList = document.getElementById('steps-list')
+    stepsList.innerHTML = ''
+
+    steps.forEach((step) => {
+      const item = document.createElement('li')
+      item.textContent = step
+      stepsList.appendChild(item)
+    })
+  }
+
+  function handleAutoInstallFromQuery() {
+    if (hasHandledAutoInstall) {
+      return
+    }
+
+    hasHandledAutoInstall = true
+
+    const currentUrl = new URL(window.location.href)
+    const shouldAutoInstall = currentUrl.searchParams.get(IOS_AUTO_INSTALL_QUERY_KEY) === 'true'
+
+    if (!shouldAutoInstall) {
+      return
+    }
+
+    const channel = currentUrl.searchParams.get(CHANNEL_QUERY_KEY) || '1'
+    const environment = detectBrowserEnvironment()
+
+    currentUrl.searchParams.delete(IOS_AUTO_INSTALL_QUERY_KEY)
+    window.history.replaceState({}, '', `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`)
+
+    if (environment.isIOS && environment.isSafari) {
+      window.setTimeout(() => {
+        try {
+          triggerIOSInstall(channel)
+        } catch {
+          // Leave the visible actions on the page so the user can retry manually.
+        }
+      }, 240)
+    }
+  }
+
+  createXhjPageI18n({
+    messages: {
+      'zh-CN': {
+        pageTitle: 'iOS 安装',
+        installReadyTitle: 'Safari 已就绪，可以直接安装',
+        installReadyDescription: () => '当前环境已满足 iOS 企业签安装要求，点击下方按钮即可直接尝试拉起安装。',
+        installSwitchTitle: '请继续在 Safari 中完成安装',
+        installSwitchDescription: (environment) =>
+          `当前浏览器为 ${environment.browserName}。部分内嵌浏览器或第三方浏览器会拦截 itms-services 协议，建议优先切换到 Safari。`,
+        installDesktopTitle: '请在 iPhone Safari 中继续安装',
+        installDesktopDescription:
+          '当前设备无法直接拉起 iOS 企业签安装。请把当前链接发送到 iPhone，并使用系统自带 Safari 打开。',
+        envBanner: (environment) => `当前环境：iOS · ${environment.browserName}`,
+        desktopBanner: '当前环境：非 iPhone 设备',
+        readySteps: [
+          '点击“立即安装”拉起系统安装流程。',
+          '如安装后提示未受信任，请到“设置 > 通用 > VPN 与设备管理”完成证书信任。',
+          '若点击后没有出现系统弹窗，可稍后重试一次。',
+        ],
+        switchSteps: [
+          '先点击“先尝试安装”，部分浏览器仍可能直接拉起安装。',
+          '如果没有反应，请点击“打开 Safari”或先复制当前链接，再到 Safari 中打开。',
+          '安装完成后如提示未受信任，请到“设置 > 通用 > VPN 与设备管理”中完成信任。',
+        ],
+        desktopSteps: [
+          '复制当前链接并发送到 iPhone。',
+          '在系统自带 Safari 中打开该链接。',
+          '页面会保留当前渠道参数，并在 Safari 中继续安装流程。',
+        ],
+        readyNote: '若当前网络较慢，系统安装弹窗可能会稍晚出现，请耐心等待几秒。',
+        switchNote: '如果第三方浏览器静默拦截安装协议，复制链接后在 Safari 中打开通常最稳定。',
+        desktopNote: '复制出的链接会自动附带当前渠道与自动安装参数，便于在手机上继续。',
+        installNowLabel: '立即安装',
+        tryInstallLabel: '先尝试安装',
+        copyPhoneLinkLabel: '复制当前链接',
+        copyLinkLabel: '复制当前链接',
+        openSafariLabel: '打开 Safari',
+        trustTitle: '安装后如何信任证书',
+        trustSteps: [
+          '打开“设置”。',
+          '进入“通用”。',
+          '打开“VPN 与设备管理”。',
+          '找到对应企业开发者证书并点击“信任”。',
+        ],
+        backHomeLabel: '返回官网',
+        channelLabel: (channel) => `iOS 渠道 ${channel}`,
+        installAttemptStatus: '正在尝试拉起安装，请留意系统弹窗。',
+        installFailureStatus: '安装没有成功拉起，请改用 Safari 或复制当前链接后重试。',
+        installPendingLabel: '下载中...',
+        unsupportedBrowserConfirm: '当前浏览器可能不支持直接安装。\n\n是否跳转到Safari浏览器进行安装？',
+        installTimeoutAlert:
+          '下载可能未成功启动。\n\n请检查网络连接，或稍后重试。\n\n您也可以点击“打开 Safari”按钮重试。',
+        copySuccessStatus: '已复制当前链接，请到 Safari 中打开。',
+        copyFailureStatus: '复制失败，请手动复制地址栏中的当前链接。',
+        openSafariStatus: '正在尝试切换到 Safari。',
+        onlyIOSStatus: '当前设备不是 iPhone，无法直接切换到 Safari 安装。',
+      },
+      'en-US': {
+        pageTitle: 'iOS Installation',
+        installReadyTitle: 'Safari is ready for direct install',
+        installReadyDescription: () =>
+          'This environment already meets the basic requirements for enterprise iOS installation. You can try launching the installer directly.',
+        installSwitchTitle: 'Finish the install in Safari',
+        installSwitchDescription: (environment) =>
+          `You are currently in ${environment.browserName}. Embedded and third-party browsers often block the itms-services protocol, so Safari is usually the safest path.`,
+        installDesktopTitle: 'Continue This in iPhone Safari',
+        installDesktopDescription:
+          'This device cannot launch the enterprise iOS installer directly. Send the current link to your iPhone and open it with the built-in Safari browser.',
+        envBanner: (environment) => `Current environment: iOS in ${environment.browserName}`,
+        desktopBanner: 'Current environment: not an iPhone',
+        readySteps: [
+          'Tap "Install Now" to launch the system install flow.',
+          'If iOS later says the app is untrusted, complete trust setup in Settings > General > VPN & Device Management.',
+          'If nothing appears immediately, wait a few seconds and try once more.',
+        ],
+        switchSteps: [
+          'Tap "Try Install First" because some browsers can still launch the installer.',
+          'If nothing happens, use "Open Safari" or copy the current link and continue there.',
+          'If iOS later says the app is untrusted, finish trust setup in Settings > General > VPN & Device Management.',
+        ],
+        desktopSteps: [
+          'Copy the current link and send it to your iPhone.',
+          'Open that link in the built-in Safari browser.',
+          'The page keeps the current channel so the same install flow continues in Safari.',
+        ],
+        readyNote: 'On a slower network, the iOS install prompt can take a few seconds to appear.',
+        switchNote: 'If a third-party browser silently blocks the install protocol, copying the link into Safari is usually the most reliable fallback.',
+        desktopNote: 'The copied link includes both the current channel and an auto-install flag for Safari.',
+        installNowLabel: 'Install Now',
+        tryInstallLabel: 'Try Install First',
+        copyPhoneLinkLabel: 'Copy Current Link',
+        copyLinkLabel: 'Copy Current Link',
+        openSafariLabel: 'Open Safari',
+        trustTitle: 'Trust the Certificate After Install',
+        trustSteps: [
+          'Open Settings.',
+          'Go to General.',
+          'Open VPN & Device Management.',
+          'Find the matching enterprise certificate and trust it.',
+        ],
+        backHomeLabel: 'Back to Official Site',
+        channelLabel: (channel) => `iOS Channel ${channel}`,
+        installAttemptStatus: 'Trying to launch the installer. Watch for the iOS system prompt.',
+        installFailureStatus: 'The installer did not launch successfully. Try Safari or copy the current link and continue there.',
+        installPendingLabel: 'Downloading...',
+        unsupportedBrowserConfirm:
+          'This browser may not support direct installation.\n\nOpen Safari to continue installing?',
+        installTimeoutAlert:
+          'The download may not have started.\n\nPlease check your network connection or try again later.\n\nYou can also tap "Open Safari" to retry.',
+        copySuccessStatus: 'The current link has been copied. Open it in Safari to continue.',
+        copyFailureStatus: 'Copy failed. Please copy the current address from the browser bar manually.',
+        openSafariStatus: 'Trying to hand this page off to Safari.',
+        onlyIOSStatus: 'This is not an iPhone, so Safari handoff is not available.',
+      },
+    },
+    render(content, helpers) {
+      handleAutoInstallFromQuery()
+
+      const environment = detectBrowserEnvironment()
+      const channel = getCurrentChannel()
+      const pageContent = createContent(environment, content, channel)
+      const openSafariButton = document.getElementById('open-safari')
+
+      document.documentElement.lang = helpers.locale
+      document.title = content.pageTitle
+      document.getElementById('page-title').textContent = pageContent.title
+      document.getElementById('page-description').textContent = pageContent.description
+      document.getElementById('channel-badge').textContent = pageContent.channelLabel
+      document.getElementById('env-banner').textContent = pageContent.envBanner
+      document.getElementById('note-text').textContent = pageContent.note
+      document.getElementById('trust-title').textContent = content.trustTitle
+      document.getElementById('primary-action').textContent = pageContent.primaryLabel
+      document.getElementById('copy-link').textContent = pageContent.copyLabel
+      openSafariButton.textContent = pageContent.openSafariLabel
+      openSafariButton.hidden = !pageContent.showOpenSafari
+
+      const toggleButton = document.getElementById('lang-toggle')
+      toggleButton.textContent = helpers.switchLabel
+      toggleButton.setAttribute('aria-label', helpers.switchAriaLabel)
+
+      renderStepList(pageContent.steps)
+      renderTrustSteps(content)
+      bindActions(pageContent, helpers.locale, content)
+
+      const homeLink = document.getElementById('home-link')
+      homeLink.textContent = content.backHomeLabel
+      homeLink.href = helpers.withLocaleHref('/')
+    },
+  })
+})()

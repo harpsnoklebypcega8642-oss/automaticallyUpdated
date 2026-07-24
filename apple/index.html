@@ -1,121 +1,302 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">应用下载安装</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="app-container">
-        <div class="pc-container">
-            <div class="app-header">
-                <div class="app-logo-container">
-                    <img src="image/logo.png" class="app-logo" alt="logo" onerror="this.style.display='none'">
-                    <div class="app-rating">
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="score" id="ratingScore">5.0</span>
-                    </div>
-                </div>
-                <div class="app-info">
-                    <div class="app-title" id="appTitle">应用名称</div>
-                    <div class="app-version info-strong" id="appVersion">版本：</div>
-                    <!-- <div class="app-size info-strong">大小：44.17M</div> -->
-                    <div class="app-lang info-strong">语言：简体中文</div>
-                    <div class="app-meta">
-                        <!-- <span class="meta-item">年龄分级：4+</span> -->
-                        <span class="meta-item">价格：免费</span>
-                        <span class="meta-item">版权：©2025</span>
-                    </div>
-                </div>
-                <div class="qrcode-block">
-                    <canvas id="qrcode" class="qrcode"></canvas>
-                    <div class="tip">请使用手机扫描二维码下载安装</div>
-                </div>
-            </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>iOS 下载引导</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: linear-gradient(180deg, #eef4ff 0%, #ffffff 100%);
+        --card-bg: rgba(255, 255, 255, 0.92);
+        --card-border: rgba(3, 70, 230, 0.12);
+        --primary: #0346e6;
+        --text: #18213d;
+        --muted: #5d6b8a;
+        --accent-bg: rgba(3, 70, 230, 0.08);
+        --shadow: 0 24px 60px rgba(3, 70, 230, 0.14);
+      }
 
-            <!-- 手机端：显示下载按钮（替代二维码） -->
-            <div class="install-section" id="mobileInstallSection" style="display:none;">
-                <button id="installBtn" class="install-btn">
-                    <span class="btn-icon">📱</span>
-                    <span>立即下载</span>
-                </button>
-                <div class="install-tip">点击按钮开始安装</div>
-            </div>
-          
-            <div class="comment-block">
-                <div class="comment-title">评论</div>
-                <div class="comment-content">
-                    <div class="comment-header">
-                        <div class="comment-rating">
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                        </div>
-                        <div class="comment-meta">
-                            <span class="comment-author">Sarah Davis</span>
-                            <span class="comment-date">4 January 2026</span>
-                        </div>
-                    </div>
-                    <div class="comment-text">这款应用真的非常出色！运行流畅无卡顿，画面细腻清晰，操作直观便捷，玩法丰富且极具趣味性。身边的同事都在使用，朋友们不妨也试试看，相信你会爱上它！强烈推荐！</div>
-                </div>
-            </div>
-           
-        </div>
-    </div>
-    <!-- 尝试多个CDN源以确保加载成功 -->
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js" onerror="loadQRCodeFallback()"></script>
-    <script>
-        // 备用CDN加载函数
-        function loadQRCodeFallback() {
-            console.log('主CDN加载失败，尝试备用CDN...');
-            const script = document.createElement('script');
-            script.src = 'https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js';
-            script.onerror = function() {
-                console.error('所有CDN都加载失败');
-                document.querySelector('.tip').textContent = '二维码库加载失败，请检查网络';
-            };
-            document.head.appendChild(script);
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        padding: 32px 16px;
+        display: grid;
+        place-items: center;
+        font-family: "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      .lang-switch {
+        position: fixed;
+        top: max(16px, env(safe-area-inset-top));
+        right: 16px;
+        min-width: 88px;
+        min-height: 40px;
+        padding: 0 16px;
+        border: 1px solid rgba(3, 70, 230, 0.18);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.94);
+        color: var(--primary);
+        cursor: pointer;
+        box-shadow: 0 12px 32px rgba(3, 70, 230, 0.12);
+      }
+
+      main {
+        width: min(560px, 100%);
+        padding: 32px 28px;
+        border: 1px solid var(--card-border);
+        border-radius: 28px;
+        background: var(--card-bg);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(14px);
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        min-height: 32px;
+        padding: 0 14px;
+        border-radius: 999px;
+        background: var(--accent-bg);
+        color: var(--primary);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+      }
+
+      h1 {
+        margin: 16px 0 10px;
+        font-size: clamp(28px, 6vw, 38px);
+        line-height: 1.1;
+      }
+
+      p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      .env-note {
+        margin-top: 18px;
+        padding: 14px 16px;
+        border-radius: 18px;
+        background: #f4f7ff;
+        color: var(--text);
+      }
+
+      .action-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 24px;
+        min-height: 48px;
+        padding: 0 24px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, var(--primary) 0%, #336bff 100%);
+        color: #fff;
+        text-decoration: none;
+        font-weight: 700;
+        box-shadow: 0 16px 28px rgba(3, 70, 230, 0.2);
+      }
+
+      .hint-list {
+        margin: 18px 0 0;
+        padding-left: 20px;
+      }
+
+      .hint-list li {
+        color: var(--text);
+        line-height: 1.9;
+      }
+
+      @media (max-width: 560px) {
+        body {
+          padding: 20px 12px;
         }
-    </script>
-    <script src="config.js"></script>
-    <script>
-        // 动态设置应用信息
-        document.addEventListener('DOMContentLoaded', function() {
-            if (typeof CONFIG !== 'undefined') {
-                // 设置页面标题
-                const pageTitle = document.getElementById('pageTitle');
-                if (pageTitle) {
-                    pageTitle.textContent = CONFIG.APP_NAME + ' - 下载安装';
-                }
-                
-                // 设置应用名称
-                const appTitle = document.getElementById('appTitle');
-                if (appTitle) {
-                    appTitle.textContent = CONFIG.APP_NAME;
-                }
-                
-                // 设置版本号
-                const appVersion = document.getElementById('appVersion');
-                if (appVersion) {
-                    appVersion.textContent = '版本：' + CONFIG.VERSION;
-                }
-                
-                // 设置评分
-                const ratingScore = document.getElementById('ratingScore');
-                if (ratingScore) {
-                    ratingScore.textContent = CONFIG.RATING.toFixed(1);
-                }
-            }
-        });
-    </script>
-    <script src="app.js"></script>
-</body>
-</html>
 
+        main {
+          padding: 24px 18px;
+          border-radius: 24px;
+        }
+      }
+    </style>
+    <script src="/lang-switch.js"></script>
+  </head>
+  <body>
+    <button id="lang-toggle" class="lang-switch" type="button">EN</button>
+
+    <main>
+      <div id="channel-badge" class="eyebrow">iOS Channel 1</div>
+      <h1 id="page-title">iOS Download Guide</h1>
+      <p id="page-copy-1"></p>
+      <p id="page-copy-2" style="margin-top: 10px"></p>
+      <div id="env-note" class="env-note"></div>
+      <ol id="hint-list" class="hint-list"></ol>
+      <a id="install-link" class="action-link" href="/apple/install.html">Continue</a>
+    </main>
+
+    <script>
+      function detectIosEnvironment() {
+        const userAgent = navigator.userAgent || navigator.vendor || window.opera || ''
+        const vendor = navigator.vendor || ''
+        const isLegacyIOS = /iPad|iPhone|iPod/i.test(userAgent)
+        const isModernIpad = navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1
+        const isIOS = (isLegacyIOS || isModernIpad) && !window.MSStream
+        const browserFlags = {
+          isChrome: /CriOS/i.test(userAgent),
+          isFirefox: /FxiOS/i.test(userAgent),
+          isUC: /UCBrowser/i.test(userAgent),
+          isQQ: /(QQBrowser|MQQBrowser|QQ\/)/i.test(userAgent),
+          isWeChat: /MicroMessenger/i.test(userAgent),
+          isEdge: /EdgiOS/i.test(userAgent),
+          isOpera: /OPiOS/i.test(userAgent),
+        }
+        const isSafari =
+          isIOS &&
+          !Object.values(browserFlags).some(Boolean) &&
+          /apple/i.test(vendor) &&
+          /Safari/i.test(userAgent) &&
+          /Version/i.test(userAgent)
+
+        let browserName = 'Browser'
+
+        if (isSafari) {
+          browserName = 'Safari'
+        } else if (browserFlags.isWeChat) {
+          browserName = 'WeChat'
+        } else if (browserFlags.isQQ) {
+          browserName = 'QQ Browser'
+        } else if (browserFlags.isChrome) {
+          browserName = 'Chrome'
+        } else if (browserFlags.isFirefox) {
+          browserName = 'Firefox'
+        } else if (browserFlags.isEdge) {
+          browserName = 'Edge'
+        } else if (browserFlags.isOpera) {
+          browserName = 'Opera'
+        } else if (browserFlags.isUC) {
+          browserName = 'UC Browser'
+        }
+
+        return {
+          isIOS,
+          isSafari,
+          browserName,
+        }
+      }
+
+      createXhjPageI18n({
+        messages: {
+          'zh-CN': {
+            title: 'iOS 下载引导',
+            body1: '此页面会把你带到新的 iOS 安装页，并保留当前渠道参数。',
+            body2: '安装页已经补上 iPhone 识别、Safari 判断、复制链接和跳转 Safari 的兼容处理。',
+            readyNote: (env) => `当前环境：${env.browserName}。可以继续进入安装页并直接尝试安装。`,
+            switchNote: (env) =>
+              `当前环境：iOS · ${env.browserName}。如果当前浏览器无法拉起安装，安装页会继续引导你切换到 Safari。`,
+            desktopNote: '当前设备不是 iPhone。建议把链接发到手机 Safari 中继续安装。',
+            hintsReady: [
+              '点击下方按钮进入安装页。',
+              '进入后可直接拉起企业签安装。',
+              '如安装后提示未受信任，请到“设置 > 通用 > VPN 与设备管理”完成信任。',
+            ],
+            hintsSwitch: [
+              '点击下方按钮进入安装页。',
+              '先尝试直接安装，若没有反应再切换到 Safari。',
+              '安装页会保留当前渠道并支持复制当前链接。',
+            ],
+            hintsDesktop: [
+              '点击下方按钮查看完整安装步骤。',
+              '把当前链接发送到 iPhone。',
+              '使用系统自带 Safari 打开后继续安装。',
+            ],
+            actionReady: '进入安装页',
+            actionSwitch: '继续并切换 Safari',
+            actionDesktop: '查看安装步骤',
+            channelLabel: (channel) => `iOS 渠道 ${channel}`,
+          },
+          'en-US': {
+            title: 'iOS Download Guide',
+            body1: 'This page will route you into the new iOS install flow and keep the current channel parameter.',
+            body2: 'The install page now includes iPhone detection, Safari checks, copy-link support, and Safari handoff guidance.',
+            readyNote: (env) => `Current environment: ${env.browserName}. You can continue to the install page and try launching the installer directly.`,
+            switchNote: (env) =>
+              `Current environment: iOS in ${env.browserName}. If this browser cannot launch the installer, the next page will guide you into Safari.`,
+            desktopNote: 'This device is not an iPhone. Send the link to Safari on your phone to continue.',
+            hintsReady: [
+              'Open the install page with the button below.',
+              'Try the enterprise install directly there.',
+              'If iOS later says the app is untrusted, finish trust setup in Settings > General > VPN & Device Management.',
+            ],
+            hintsSwitch: [
+              'Open the install page with the button below.',
+              'Try the install once, then switch to Safari if nothing happens.',
+              'The next page keeps the current channel and can copy the exact install link for you.',
+            ],
+            hintsDesktop: [
+              'Open the install page for the full instructions.',
+              'Send the current link to your iPhone.',
+              'Continue in the built-in Safari browser.',
+            ],
+            actionReady: 'Open Install Page',
+            actionSwitch: 'Continue to Safari Flow',
+            actionDesktop: 'View Install Steps',
+            channelLabel: (channel) => `iOS Channel ${channel}`,
+          },
+        },
+        render(content, helpers) {
+          const env = detectIosEnvironment()
+          const channel = helpers.getQueryParam('channel') || '1'
+          const installUrl = new URL('/apple/install.html', window.location.origin)
+
+          installUrl.searchParams.set('channel', channel)
+          installUrl.searchParams.set('lang', helpers.locale)
+
+          document.title = content.title
+          document.getElementById('page-title').textContent = content.title
+          document.getElementById('page-copy-1').textContent = content.body1
+          document.getElementById('page-copy-2').textContent = content.body2
+          document.getElementById('channel-badge').textContent = content.channelLabel(channel)
+
+          const toggleButton = document.getElementById('lang-toggle')
+          toggleButton.textContent = helpers.switchLabel
+          toggleButton.setAttribute('aria-label', helpers.switchAriaLabel)
+
+          const envNote = document.getElementById('env-note')
+          const hintList = document.getElementById('hint-list')
+          const installLink = document.getElementById('install-link')
+          let hints = []
+
+          if (env.isIOS && env.isSafari) {
+            envNote.textContent = content.readyNote(env)
+            installLink.textContent = content.actionReady
+            hints = content.hintsReady
+          } else if (env.isIOS) {
+            envNote.textContent = content.switchNote(env)
+            installLink.textContent = content.actionSwitch
+            hints = content.hintsSwitch
+          } else {
+            envNote.textContent = content.desktopNote
+            installLink.textContent = content.actionDesktop
+            hints = content.hintsDesktop
+          }
+
+          hintList.innerHTML = ''
+          hints.forEach((item) => {
+            const li = document.createElement('li')
+            li.textContent = item
+            hintList.appendChild(li)
+          })
+
+          installLink.href = `${installUrl.pathname}${installUrl.search}`
+        },
+      })
+    </script>
+  </body>
+</html>
