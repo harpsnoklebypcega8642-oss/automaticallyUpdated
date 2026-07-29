@@ -347,7 +347,7 @@ const RESOURCES = {"assets/AssetManifest.bin": "855818f02a62c719bd1da98b44f48756
 "favicon.png": "d91237e87c23368ba999c4ee14bb1aab",
 "fingerprintjs.iife.min.js": "762eb7650c78302191ed5f6fd95ada4d",
 "flutter.js": "24bc71911b75b5f8135c949e27a2984e",
-"flutter_bootstrap.js": "be9701c5a6ed9c415de0f6955d2cb3c9",
+"flutter_bootstrap.js": "8b3a2dac384cb65a2e24388cf649a7cc",
 "icons/Icon-192.png": "b621b43203e72be1a1b657f17707b94e",
 "icons/Icon-512.png": "fd63c6a9cbb864911424dd5e021fad52",
 "icons/Icon-maskable-192.png": "b621b43203e72be1a1b657f17707b94e",
@@ -360,7 +360,7 @@ const RESOURCES = {"assets/AssetManifest.bin": "855818f02a62c719bd1da98b44f48756
 "popop_client_shell.html": "60cdbb3254b10f1dfabb9a35407ef05e",
 "pwa_install_bridge.js": "048d6e153ad188c2efae7a98b2fa930d",
 "version.json": "c9597d78e9ec563509525b43fcbad6ab",
-"xhj_h5_ceshi_1.1.9.zip": "3e7d2b02151c7263df3b16b59951a73e"};
+"xhj_h5_1.9.1.1.zip": "e0f478d33ad7e5e6605ef4ebb9c3913c"};
 // The application shell files that are downloaded before a service worker can
 // start.
 const CORE = ["main.dart.js",
