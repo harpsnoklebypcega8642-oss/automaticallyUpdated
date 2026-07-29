@@ -1,0 +1,1 @@
+import{aa as e}from"./index-BnO87JmI.js";const i="https://pc.xhj.im/auth/register";function o(t){return`${i}?invite_code=${encodeURIComponent(t)}`}const r=e("/api/v1/invite/code","POST"),s=e("/api/v1/invite/friends","POST");export{r as a,s as f,o as i};
