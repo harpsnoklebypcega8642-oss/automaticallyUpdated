@@ -1,0 +1,1 @@
+import{t as s,M as n,N as a,O as t,P as o,_ as c}from"./index-BByzc0rs.js";const p={class:"immsg-group-notice"},r=s({__name:"GroupNoticeMessage",props:{title:{},content:{}},setup(i){return(e,_)=>(a(),n("section",p,[t("h4",null,o(e.title),1),t("p",null,o(e.content),1)]))}}),u=c(r,[["__scopeId","data-v-6db4f0d0"]]);export{u as default};
