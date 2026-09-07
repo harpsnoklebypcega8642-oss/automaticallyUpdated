@@ -41147,7 +41147,7 @@ if(r.length===0)return""
 if(B.b.bU(r,"//"))return"https:"+r
 s=A.it(r)
 if(s!=null&&s.gk8())return r
-return A.bQN("https://testapp.xhjim.app",r)},
+return A.bQN("https://app.xhjim.app",r)},
 c7I(a,b){var s,r=B.b.M(a)
 if(r.length===0)return""
 if(B.b.bU(r,"//"))return"https:"+r
@@ -43492,7 +43492,7 @@ if(a<1048576)return B.d.aN(a/1024,1)+"KB"
 return B.d.aN(a/1048576,1)+"MB"},
 bMA(a,b,c){if(a!=null&&a.length!==0)return a
 return"/api/v1/talk/file-download?talk_mode="+c+"&msg_id="+b},
-bMO(a){var s="https://testapp.xhjim.app"
+bMO(a){var s="https://app.xhjim.app"
 if(B.b.bU(a,A.bM("https?://",!0,!1)))return a
 if(B.b.h8(s,"/"))return s+(B.b.bU(a,"/")?B.b.cl(a,1):a)
 return s+(B.b.bU(a,"/")?a:"/"+a)},
@@ -44932,7 +44932,7 @@ EY:function EY(a){this.a=a},
 azu:function azu(){},
 bF1:function bF1(){},
 bGK:function bGK(){},
-c4w(a){return new A.F_(a,A.O8(A.a3u("https://testapp.xhjim.app",B.io,B.avR,B.io,new A.azy())))},
+c4w(a){return new A.F_(a,A.O8(A.a3u("https://app.xhjim.app",B.io,B.avR,B.io,new A.azy())))},
 F_:function F_(a,b){this.a=a
 this.b=b},
 azy:function azy(){},
@@ -45037,7 +45037,7 @@ bG4:function bG4(){},
 GJ:function GJ(a){this.a=a},
 aN4:function aN4(){},
 bGl:function bGl(){},
-c96(a){return new A.GS(a,A.O8(A.a3u("https://testnewapi.xhjim.app/wallet",B.io,null,B.io,new A.aNF())),A.O8(A.a3u("",B.zI,null,B.zI,new A.aNG())))},
+c96(a){return new A.GS(a,A.O8(A.a3u("https://newapi.xhjim.app/wallet",B.io,null,B.io,new A.aNF())),A.O8(A.a3u("",B.zI,null,B.zI,new A.aNG())))},
 GS:function GS(a,b,c){this.a=a
 this.b=b
 this.c=c},
@@ -158966,7 +158966,7 @@ A.bAr.prototype={
 $1(a){return B.ok},
 $S:164}
 A.EW.prototype={
-azo(a,b,c){var s=this,r=A.O8(A.a3u("https://testapp.xhjim.app",B.io,A.C(["Content-Type","application/json"],t.N,t.z),B.io,new A.azf()))
+azo(a,b,c){var s=this,r=A.O8(A.a3u("https://app.xhjim.app",B.io,A.C(["Content-Type","application/json"],t.N,t.z),B.io,new A.azf()))
 s.a!==$&&A.bw()
 s.a=r
 r=r.akb$
@@ -160463,7 +160463,7 @@ s=A.P(new A.ba(s,new A.aIM(),r),r.i("v.E"))
 s.$flags=1
 return s}}
 A.aIL.prototype={
-$1(a){var s,r,q,p,o,n,m,l=null,k="https://testapp.xhjim.app",j=A.eB(a,t.N,t.z),i=j.h(0,"url"),h=i==null?l:B.b.M(J.aP(i))
+$1(a){var s,r,q,p,o,n,m,l=null,k="https://app.xhjim.app",j=A.eB(a,t.N,t.z),i=j.h(0,"url"),h=i==null?l:B.b.M(J.aP(i))
 if(h==null)h=""
 i=j.h(0,"image")
 s=i==null?l:B.b.M(J.aP(i))
@@ -161108,7 +161108,7 @@ a.aNK(b,B.nq)
 j=A.y(d,c)
 if(m!=null&&m.length!==0)J.bx(j,"Authorization",n.aHp(m))
 s=9
-return A.c(n.c.Rg("https://walletadmin.thkpay.top/api/upload/thirdFileUpload",a,A.C3("multipart/form-data",null,j,null,null),c),$async$BC)
+return A.c(n.c.Rg("https://walletadmin.thkpay.net/api/upload/thirdFileUpload",a,A.C3("multipart/form-data",null,j,null,null),c),$async$BC)
 case 9:i=a5
 h=n.vq(i.a)
 g=n.XM(J.U(h,"code"))
@@ -162547,7 +162547,7 @@ break
 case 13:n.f=B.pE
 h=n.e
 h.q(0,B.pE)
-l="wss://testapp.xhjim.app/wss/default.io?token="+m
+l="wss://app.xhjim.app/wss/default.io?token="+m
 n.a=A.c4f(A.bIF(A.fS(l,0,null),null))
 n.f=B.fP
 h.q(0,B.fP)
