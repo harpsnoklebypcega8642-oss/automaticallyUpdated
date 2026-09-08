@@ -44,11 +44,11 @@ const RESOURCES = {"assets/AssetManifest.bin": "ee70cb9674fc365a5dfbaacb43ec820d
 "assets/assets/images/xhjVideo.png": "02d4c40505f6673c294191914f9c66e5",
 "assets/assets/sounds/notice.mp3": "17ccc6b78388c9e0733f49653ab6f6dc",
 "assets/FontManifest.json": "df7941d7f1471ba664695d864ca1b139",
-"assets/fonts/MaterialIcons-Regular.otf": "009af8f554445793ccbdb526090406a0",
+"assets/fonts/MaterialIcons-Regular.otf": "aba6dfa639b16d2df2717df0c77c5910",
 "assets/fonts/Roboto-Bold.ttf": "a0dfeb5d15101b6933df056d25bf1f3d",
 "assets/fonts/Roboto-Regular.ttf": "c967730c06373ac1b27c087a3b3a0d06",
 "assets/NOTICES": "267d0af643edfb5d14299f081c9d59b7",
-"assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "33b7d9392238c04c131b6ce224e13711",
+"assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "d7d83bd9ee909f8a9b348f56ca7b68c6",
 "assets/packages/fluttertoast/assets/toastify.css": "a85675050054f179444bc5ad70ffc635",
 "assets/packages/fluttertoast/assets/toastify.js": "56e2c9cedd97f10e7e5f1cebd85d53e3",
 "assets/packages/netease_callkit_ui/assets/audios/avchat_connecting.mp3": "4a5d1afe44f07a0d789a46e52e3687ed",
@@ -103,7 +103,7 @@ const RESOURCES = {"assets/AssetManifest.bin": "ee70cb9674fc365a5dfbaacb43ec820d
 "favicon.png": "d91237e87c23368ba999c4ee14bb1aab",
 "fingerprintjs.iife.min.js": "762eb7650c78302191ed5f6fd95ada4d",
 "flutter.js": "24bc71911b75b5f8135c949e27a2984e",
-"flutter_bootstrap.js": "cb657ce16d7c1b3299ec65f9f1bfc202",
+"flutter_bootstrap.js": "845b95d6706b72605076012608698a09",
 "icons/Icon-192.png": "b621b43203e72be1a1b657f17707b94e",
 "icons/Icon-512.png": "fd63c6a9cbb864911424dd5e021fad52",
 "icons/Icon-maskable-192.png": "b621b43203e72be1a1b657f17707b94e",
@@ -111,11 +111,11 @@ const RESOURCES = {"assets/AssetManifest.bin": "ee70cb9674fc365a5dfbaacb43ec820d
 "index.html": "fe69ee9e97304dae920b56aa60b81833",
 "/": "fe69ee9e97304dae920b56aa60b81833",
 "logo.png": "e6656ba073ce3649fec1e6f735f0b5d0",
-"main.dart.js": "c118eac4a0f678aba066973ca5f820d7",
+"main.dart.js": "b5e70eb98183bbcb069f19e8e6635cf4",
 "manifest.json": "94d13eb1b576640bc82292eaa5be2e71",
 "popop_client_shell.html": "60cdbb3254b10f1dfabb9a35407ef05e",
 "pwa_install_bridge.js": "048d6e153ad188c2efae7a98b2fa930d",
-"version.json": "1483918b1d397c695e8856c110df814e"};
+"version.json": "1fade8914a8a5df12af2ae839f618ab8"};
 // The application shell files that are downloaded before a service worker can
 // start.
 const CORE = ["main.dart.js",
