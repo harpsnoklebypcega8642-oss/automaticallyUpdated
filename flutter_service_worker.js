@@ -3,8 +3,8 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
-const RESOURCES = {"assets/AssetManifest.bin": "af6ceb758fdbe3d10f9aed527972a8c8",
-"assets/AssetManifest.bin.json": "4fdf939a6fefd5b295fc7056ba0c4b75",
+const RESOURCES = {"assets/AssetManifest.bin": "ee70cb9674fc365a5dfbaacb43ec820d",
+"assets/AssetManifest.bin.json": "8bfd6bbd0b56239b03e8499c69b2feba",
 "assets/assets/icons/login_brand_mark.svg": "f06ad3a7be16e30b29c7d182f08b853f",
 "assets/assets/icons/logo.jpg": "9ccea5e1d993858e38656c1285fcc21e",
 "assets/assets/icons/play.png": "e719edc97e1df1d69ddd520a02a5e855",
@@ -25,6 +25,8 @@ const RESOURCES = {"assets/AssetManifest.bin": "af6ceb758fdbe3d10f9aed527972a8c8
 "assets/assets/images/message/group_message_readers_placeholder.svg": "403d9bd2944bcd49d87b2fdd2c325b62",
 "assets/assets/images/message/group_message_read_frame.svg": "af08990d7c6dde74ba9d6aae065a2f9b",
 "assets/assets/images/message/group_message_read_overflow.svg": "b8b6546f4c38a83a880a1e3fd8f7442f",
+"assets/assets/images/message/home_announcement.svg": "17dad512c5fc6a9b0743dc6a7e9952fe",
+"assets/assets/images/message/home_announcement_close.svg": "ba5910ccf925a377dfea7621816b30fd",
 "assets/assets/images/message/network_error_placeholder.svg": "b1dee8269ee2d30e65dc9dc649ad7277",
 "assets/assets/images/message/notice.svg": "a59d3642756c4295e2b5bc919d860491",
 "assets/assets/images/message/notice_center_chevron.svg": "afd4246a84d990979267588f991016a7",
@@ -101,7 +103,7 @@ const RESOURCES = {"assets/AssetManifest.bin": "af6ceb758fdbe3d10f9aed527972a8c8
 "favicon.png": "d91237e87c23368ba999c4ee14bb1aab",
 "fingerprintjs.iife.min.js": "762eb7650c78302191ed5f6fd95ada4d",
 "flutter.js": "24bc71911b75b5f8135c949e27a2984e",
-"flutter_bootstrap.js": "2b9e52ca8951a650867d114a7f8a27b8",
+"flutter_bootstrap.js": "cb657ce16d7c1b3299ec65f9f1bfc202",
 "icons/Icon-192.png": "b621b43203e72be1a1b657f17707b94e",
 "icons/Icon-512.png": "fd63c6a9cbb864911424dd5e021fad52",
 "icons/Icon-maskable-192.png": "b621b43203e72be1a1b657f17707b94e",
@@ -109,7 +111,7 @@ const RESOURCES = {"assets/AssetManifest.bin": "af6ceb758fdbe3d10f9aed527972a8c8
 "index.html": "fe69ee9e97304dae920b56aa60b81833",
 "/": "fe69ee9e97304dae920b56aa60b81833",
 "logo.png": "e6656ba073ce3649fec1e6f735f0b5d0",
-"main.dart.js": "035dd3526f46aa5299fa0dc8730967e8",
+"main.dart.js": "c118eac4a0f678aba066973ca5f820d7",
 "manifest.json": "94d13eb1b576640bc82292eaa5be2e71",
 "popop_client_shell.html": "60cdbb3254b10f1dfabb9a35407ef05e",
 "pwa_install_bridge.js": "048d6e153ad188c2efae7a98b2fa930d",
