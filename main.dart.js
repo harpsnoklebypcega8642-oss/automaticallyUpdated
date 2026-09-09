@@ -45750,7 +45750,7 @@ if(r.length===0)return""
 if(B.c.bp(r,"//"))return"https:"+r
 s=A.i7(r)
 if(s!=null&&s.gky())return r
-return A.c6Z("https://app.xhj.im",r)},
+return A.c6Z("https://app.xhjim.app",r)},
 cqr(a,b){var s,r=B.c.M(a)
 if(r.length===0)return""
 if(B.c.bp(r,"//"))return"https:"+r
@@ -48100,7 +48100,7 @@ if(a<1048576)return B.d.aR(a/1024,1)+"KB"
 return B.d.aR(a/1048576,1)+"MB"},
 c29(a,b,c){if(a!=null&&a.length!==0)return a
 return"/api/v1/talk/file-download?talk_mode="+c+"&msg_id="+b},
-c2n(a){var s="https://app.xhj.im"
+c2n(a){var s="https://app.xhjim.app"
 if(B.c.bp(a,A.bE("https?://",!0,!1)))return a
 if(B.c.fv(s,"/"))return s+(B.c.bp(a,"/")?B.c.ck(a,1):a)
 return s+(B.c.bp(a,"/")?a:"/"+a)},
@@ -49541,7 +49541,7 @@ HN:function HN(a){this.a=a},
 aIy:function aIy(){},
 bV_:function bV_(){},
 bWJ:function bWJ(){},
-cn6(a){return new A.HP(a,A.Sk(A.a9o("https://app.xhj.im",B.jN,B.aYn,B.jN,new A.aIC())))},
+cn6(a){return new A.HP(a,A.Sk(A.a9o("https://app.xhjim.app",B.jN,B.aYn,B.jN,new A.aIC())))},
 HP:function HP(a,b){this.a=a
 this.b=b},
 aIC:function aIC(){},
@@ -49646,7 +49646,7 @@ bW3:function bW3(){},
 JQ:function JQ(a){this.a=a},
 aYd:function aYd(){},
 bWk:function bWk(){},
-cs0(a){return new A.K_(a,A.Sk(A.a9o("https://newapi.xhj.im/wallet",B.jN,null,B.jN,new A.aYO())),A.Sk(A.a9o("",B.EU,null,B.EU,new A.aYP())))},
+cs0(a){return new A.K_(a,A.Sk(A.a9o("https://newapi.xhjim.app/wallet",B.jN,null,B.jN,new A.aYO())),A.Sk(A.a9o("",B.EU,null,B.EU,new A.aYP())))},
 K_:function K_(a,b,c){this.a=a
 this.b=b
 this.c=c},
@@ -177186,7 +177186,7 @@ A.bPM.prototype={
 $1(a){return B.qE},
 $S:162}
 A.HL.prototype={
-aJe(a,b,c){var s=this,r=A.Sk(A.a9o("https://app.xhj.im",B.jN,A.w(["Content-Type","application/json"],t.N,t.z),B.jN,new A.aIj()))
+aJe(a,b,c){var s=this,r=A.Sk(A.a9o("https://app.xhjim.app",B.jN,A.w(["Content-Type","application/json"],t.N,t.z),B.jN,new A.aIj()))
 s.a!==$&&A.bw()
 s.a=r
 r=r.ars$
@@ -178683,7 +178683,7 @@ s=A.T(new A.b1(s,new A.aTk(),r),r.i("B.E"))
 s.$flags=1
 return s}}
 A.aTj.prototype={
-$1(a){var s,r,q,p,o,n,m,l=null,k="https://app.xhj.im",j=A.et(a,t.N,t.z),i=j.h(0,"url"),h=i==null?l:B.c.M(J.aR(i))
+$1(a){var s,r,q,p,o,n,m,l=null,k="https://app.xhjim.app",j=A.et(a,t.N,t.z),i=j.h(0,"url"),h=i==null?l:B.c.M(J.aR(i))
 if(h==null)h=""
 i=j.h(0,"image")
 s=i==null?l:B.c.M(J.aR(i))
@@ -180778,7 +180778,7 @@ break
 case 13:n.f=B.tB
 h=n.e
 h.q(0,B.tB)
-l="wss://app.xhj.im/wss/default.io?token="+m
+l="wss://app.xhjim.app/wss/default.io?token="+m
 n.a=A.cmN(A.bYP(A.eG(l,0,null),null))
 n.f=B.i0
 h.q(0,B.i0)
