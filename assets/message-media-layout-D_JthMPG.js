@@ -1,0 +1,1 @@
+const s={width:480,height:270},i={width:360,height:480};function n(e,a){if(e<=0||a<=0)return s;const t=Math.min(i.width/e,i.height/a);return{width:Math.round(e*t*100)/100,height:Math.round(a*t*100)/100}}export{n as g,s as m};

@@ -1,0 +1,1 @@
+import{z as e,ap as a,aq as n,as as o,ao as t}from"./index-CP-huyAt.js";const p={class:"immsg-unknown"},_=e({__name:"UnknownMessage",props:{msgType:{}},setup(c){return(s,r)=>(n(),a("div",p,"未知消息类型 [msg_type="+o(s.msgType)+"]",1))}}),i=t(_,[["__scopeId","data-v-dceaa496"]]);export{i as default};
