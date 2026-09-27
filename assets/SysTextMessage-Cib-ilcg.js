@@ -1,0 +1,1 @@
+/* empty css                    */import{z as e,aq as t,ar as a,as as o,at as n}from"./index-jcJzFB7T.js";const c={class:"immsg-systext"},r={class:"sys-text"},d=e({__name:"SysTextMessage",props:{content:{}},setup(i){return(s,p)=>(a(),t("div",c,[o("div",r,n(s.content),1)]))}});export{d as default};
