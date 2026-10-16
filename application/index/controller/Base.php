@@ -86,13 +86,6 @@ class Base extends All
     }
     protected function check_user_popedom($type_id,$popedom,$param=[],$flag='',$info=[],$trysee=0)
     {
-        // 播放内容对游客开放：不检查用户组播放权限、试看权限或播放积分。
-        // 网页端的 15 分钟限制由 static/player/dplayer.html 单独处理，保持不变。
-        // 播放密码和版权跳转仍在播放控制器中独立校验。
-        if($flag == 'play' && in_array($popedom,[3,5])){
-            return ['code'=>1,'msg'=>lang('controller/popedom_ok'),'trysee'=>0];
-        }
-
         $user = $GLOBALS['user'];
         $group = $GLOBALS['user']['group'];
 
