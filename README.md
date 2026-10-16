@@ -10,3 +10,18 @@ Apple CMS program is a set of PHP and MYSQL environment operating in a perfect a
 This program is for internal learning and communication use only, there is no built-in data, please comply with local laws under the premise of using the site program, the user in the process of self-maintenance of the information content of this site is not responsible!
 
 <!-- 火箭视频 -->
+
+    // 数据库名
+    'database'        => 'testtv2',
+    // 用户名
+    'username'        => 'testtv2',
+    // 密码
+    'password'        => '123456', 
+
+测试
+        // 数据库名
+    'database'        => 'tfundof',
+    // 用户名
+    'username'        => 'user1',
+    // 密码
+    'password'        => '123456',
