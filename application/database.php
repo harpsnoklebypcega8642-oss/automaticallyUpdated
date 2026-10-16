@@ -14,9 +14,9 @@ return [
     // 服务器地址
     'hostname'        => '127.0.0.1',
     // 数据库名
-    'database'        => 'tfundof',
+    'database'        => 'testtv2',
     // 用户名
-    'username'        => 'user1',
+    'username'        => 'testtv2',
     // 密码
     'password'        => '123456',
     // 端口
