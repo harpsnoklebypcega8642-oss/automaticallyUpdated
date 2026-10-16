@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    {include file="public/include"}
+    {php}$static = $shoutu['basic']['static_is']==1?$shoutu['basic']['static']:'';{/php}
+    <link href="{$static|mac_default=''.$maccms.path_tpl.''}statics/css/app-growth.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<header>
+    <div class="shoutu-mhead clearfix">
+        <h3>《{$obj.vod_name}》·{$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}</h3>
+        <div class="go-back">
+            <a href="javascript:void(0);" onclick="history.back();"><?xml version="1.0" encoding="UTF-8"?><svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M31 36L19 24L31 12" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="go-share">
+            <p class="content" style="display: none;">我正在观看{$obj.vod_name}{$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}，地址：{$maccms.site_url}{:mac_url_vod_play($obj,['sid'=>$param['sid'],'nid'=>$param['nid']])}</p>
+            <a class="myui-copy-html" data-text="" href="javascript:;"><svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M28 6H42V20" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path><path d="M42 29.4737V39C42 40.6569 40.6569 42 39 42H9C7.34315 42 6 40.6569 6 39V9C6 7.34315 7.34315 6 9 6L18 6" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path><path d="M25.7998 22.1999L41.0998 6.8999" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+        </div>
+    </div>
+</header>
+<section>
+    <div id="play-box">
+        {$player_data}
+        {$player_js}
+    </div>
+    <div style="height: 100px;"></div>
+</section>
+<footer>
+    <div id="play-footer">
+        <div id="overlay"></div>
+        <div id="play-list">
+            <div class="footer-title">
+                <?xml version="1.0" encoding="UTF-8"?><svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 11.9143L24 19L44 11.9143L24 5L4 11.9143Z" fill="none" stroke="#000000" stroke-width="4" stroke-linejoin="round"/><path d="M4 20L24 27L44 20" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 28L24 35L44 28" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 36L24 43L44 36" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg> 
+                <span>《{$obj.vod_name}》· {$obj.vod_remarks}</span>
+            
+                <i class="closeBtn"><?xml version="1.0" encoding="UTF-8"?><svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M36 18L24 30L12 18" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></i>
+            </div>
+            <div class="play-list">
+                {include file="vod/play_list"}
+            </div>
+        </div>
+        <div class="footer-title">
+            <?xml version="1.0" encoding="UTF-8"?><svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 11.9143L24 19L44 11.9143L24 5L4 11.9143Z" fill="none" stroke="#000000" stroke-width="4" stroke-linejoin="round"/><path d="M4 20L24 27L44 20" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 28L24 35L44 28" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 36L24 43L44 36" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg> 
+            <span>《{$obj.vod_name}》· {$obj.vod_remarks}</span>
+        
+            <i><?xml version="1.0" encoding="UTF-8"?><svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 30L25 18L37 30" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></i>
+        </div>
+    </div>
+</footer>
+<span class="mac_hits hits hide" data-mid="{$maccms.mid}" data-id="{$obj.vod_id}{$obj.art_id}{$obj.topic_id}" data-type="hits"></span>
+<span class="mac_ulog_set hide" data-type="4" data-mid="{$maccms.mid}" data-id="{$obj.vod_id}" data-sid="{$param.sid}" data-nid="{$param.nid}"></span>
+<span class="vod_history hide" data-name="{$obj.vod_name|mac_substring=10}" data-link="{:mac_url_vod_play($obj,['sid'=>$param['sid'],'nid'=>$param['nid']])}"  data-pic="{$obj.vod_pic|mac_url_img}" data-type="{$obj.vod_class}" data-actor="{$obj.vod_actor}" data-part="{$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}" data-limit="10"></span>
+
+<div id="app-growth-modal" class="app-growth-modal">
+    <div class="app-growth-modal__mask" onclick="PopopGrowth.hideModal()"></div>
+    <div class="app-growth-modal__panel">
+        <h3>试看已结束</h3>
+        <p>网页端试看时长为 <strong>15 分钟</strong>。如需观看完整视频，请前往 <a href="https://xhj.im" target="_blank">https://xhj.im</a> 官网下载「<strong>小火箭</strong>」App 继续观看。</p>
+        <div class="app-growth-modal__actions">
+            <a class="btn btn-primary" href="https://xhj.im">前往 https://xhj.im 下载小火箭</a>
+            <button class="btn btn-default" type="button" onclick="PopopGrowth.hideModal()">我知道了</button>
+        </div>
+    </div>
+</div>
+
+<div id="app-growth-bar" class="app-growth-bar">
+    试看已结束 · 完整版请 <a href="https://xhj.im">前往 https://xhj.im 下载小火箭 App</a>
+</div>
+
+<script>
+    window.PopopGrowth = window.PopopGrowth || {};
+    PopopGrowth.config = {
+        enabled: true,
+        limitSeconds: 15 * 60,
+        uaToken: 'Popop_Client',
+        downloadUrl: 'https://xhj.im',
+        appName: '小火箭',
+        title: '试看已结束',
+        closable: true,
+        replayWithinLimit: true,
+        showModalOnReplay: true,
+        showBarOnDismiss: true
+    };
+</script>
+<script type="text/javascript" src="{$static|mac_default=''.$maccms.path_tpl.''}statics/js/app-growth.js"></script>
+
+<script>
+    $(document).ready(function () {
+        showDiv('footer-title','play-list','overlay','closeBtn');
+    });     
+
+    function showDiv(btn,div,over,close){
+        $('.'+btn).click(function () {
+            $('#'+over).fadeIn();
+            $('#'+div).show().animate({ bottom: 0 }, 100);
+        });
+        
+        $('#'+over+', .'+close).click(function () {
+            $('#'+div).animate({ bottom: '-100%' }, 100, function () {
+                $(this).hide();
+                $('#'+over).fadeOut();
+            });
+        });
+    }
+</script>
+
+  
+
+
+
+</body>
+
+</html>

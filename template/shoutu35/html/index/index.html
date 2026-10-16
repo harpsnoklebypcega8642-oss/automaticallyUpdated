@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    {include file="public/include"}
+    <link href="{$static|mac_default=''.$maccms.path_tpl.''}statics/css/index-home.css?v={$my['version']}" rel="stylesheet" type="text/css" />
+    <script defer src="{$static|mac_default=''.$maccms.path_tpl.''}statics/js/index-home.js?v={$my['version']}"></script>
+    <script defer src="{$static|mac_default=''.$maccms.path_tpl.''}statics/js/banner-api.js?v={$my['version']}"></script>
+</head>
+<body class="home-redesign">
+    {php}
+    $value = $shoutu['set']['seatext_is']==1?$shoutu['set']['seatext']:'我想赚几个亿很合理吧';
+    {/php}
+    <div class="xhj-home">
+        <header class="xhj-home__header">
+            <!-- <div class="xhj-home__tabs" aria-label="首页导航">
+                <span class="xhj-home__tab">首页</span>
+                <span class="xhj-home__tab">火箭视频</span>
+                <span class="xhj-home__tab is-active">火箭短剧</span>
+                <span class="xhj-home__tab">应用下载</span>
+            </div> -->
+
+            <div class="xhj-home__hero-carousel xhj-carousel" data-carousel data-banner-api data-interval="4200">
+                <div class="xhj-carousel__track"></div>
+                <div class="xhj-carousel__dots" aria-label="顶部轮播切换"></div>
+            </div>
+        </header>
+
+        <p class="xhj-home__notice">本站由小火箭IM团队运营 资源已更新至2026年</p>
+
+        <form id="search" name="search" method="POST" action="{:mac_url('vod/search')}" onSubmit="return qrsearch();" class="xhj-search-form xhj-search-form--wide">
+            <input
+                type="text"
+                id="wd"
+                name="wd"
+                class="xhj-search-form__input"
+                value="<?php echo $value;?>"
+                onfocus="if(this.value=='<?php echo $value;?>'){this.value='';}"
+                onblur="if(this.value==''){this.value='<?php echo $value;?>';};"
+            />
+            <button type="submit" class="xhj-search-form__button" aria-label="搜索"></button>
+        </form>
+
+        <section class="xhj-home__section" id="recent-hot">
+            <div class="xhj-home__section-head">
+                <div>
+                    <h2>最近热播</h2>
+                </div>
+                <a href="{:mac_url_type(['type_mid'=>1,'type_id'=>1])}">更多</a>
+            </div>
+
+            <div class="xhj-poster-grid">
+                {maccms:vod num="6" order="desc" by="hits"}
+                <a href="{:mac_url_vod_detail($vo)}" class="xhj-poster-card" title="{$vo.vod_name}">
+                    <span class="xhj-poster-card__thumb">
+                        <img src="{$vo.vod_pic|mac_url_img}" alt="{$vo.vod_name}" />
+                    </span>
+                    <span class="xhj-poster-card__title txt-ov">{$vo.vod_name}</span>
+                    <span class="xhj-poster-card__meta txt-ov">{$vo.vod_remarks|mac_default='热播中'}</span>
+                </a>
+                {/maccms:vod}
+            </div>
+
+            <div class="xhj-home__promo-carousel xhj-carousel xhj-carousel--promo" data-carousel data-banner-api data-interval="5000">
+                <div class="xhj-carousel__track"></div>
+                <div class="xhj-carousel__dots" aria-label="最近热播轮播切换"></div>
+            </div>
+        </section>
+
+        <section class="xhj-home__section" id="recommend-picks">
+            <div class="xhj-home__section-head">
+                <div>
+                    <h2>推荐分类</h2>
+                </div>
+            </div>
+
+            <div class="xhj-poster-grid xhj-poster-grid--small">
+                {maccms:vod num="6" order="desc" by="time_add"}
+                <a href="{:mac_url_vod_detail($vo)}" class="xhj-poster-card" title="{$vo.vod_name}">
+                    <span class="xhj-poster-card__thumb">
+                        <img src="{$vo.vod_pic|mac_url_img}" alt="{$vo.vod_name}" />
+                    </span>
+                    <span class="xhj-poster-card__title txt-ov">{$vo.vod_name}</span>
+                    <span class="xhj-poster-card__meta txt-ov">{$vo.vod_remarks|mac_default='推荐中'}</span>
+                </a>
+                {/maccms:vod}
+            </div>
+        </section>
+
+        <section class="xhj-home__section" id="fresh-picks">
+            <div class="xhj-home__section-head">
+                <div>
+                    <h2>最近更新</h2>
+                </div>
+                <a href="{:mac_url_type(['type_mid'=>1,'type_id'=>1])}">查看更多</a>
+            </div>
+
+            <div class="xhj-poster-grid xhj-poster-grid--small">
+                {maccms:vod num="6" order="desc" by="time"}
+                <a href="{:mac_url_vod_detail($vo)}" class="xhj-poster-card" title="{$vo.vod_name}">
+                    <span class="xhj-poster-card__thumb">
+                        <img src="{$vo.vod_pic|mac_url_img}" alt="{$vo.vod_name}" />
+                    </span>
+                    <span class="xhj-poster-card__title txt-ov">{$vo.vod_name}</span>
+                    <span class="xhj-poster-card__meta txt-ov">{$vo.vod_year|mac_default='持续更新'}</span>
+                </a>
+                {/maccms:vod}
+            </div>
+        </section>
+    </div>
+
+    {include file="public/foot"}
+</body>
+</html>

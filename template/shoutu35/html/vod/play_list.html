@@ -1,0 +1,33 @@
+{if $obj['vod_play_list'][2]}
+<section class="tab clearfix" id="play_tab">
+    <ul>
+        {maccms:foreach name="obj.vod_play_list" id="vo"}
+        <li {if condition="$param.sid eq $vo.sid"}class="active"{/if}><a href="javascript:void(0);">{$vo.player_info.show}</a></li>
+        {/maccms:foreach}
+    </ul>
+</section>
+{/if}
+<section class="tab_box clearfix" id="play_tab_box">
+    {maccms:foreach name="obj.vod_play_list" id="vo"}
+    <div class="item" {if $vo.sid > 1}style="display:none;"{/if}>
+        <div class="video_list fn-clear">
+            {maccms:foreach name="vo.urls" id="vo2"}
+            <a href="{:mac_url_vod_play($obj,['sid'=>$vo.sid,'nid'=>$vo2.nid])}" class="{if condition="$param.sid eq $vo.sid && $param.nid eq $vo2.nid"}btn-warm{else}btn-default{/if} txt-ov">{$vo2.name}</a>
+            {/maccms:foreach}
+        </div>
+    </div>
+    {/maccms:foreach}
+</section>
+<script type="text/javascript">
+    $("#play_tab li:first").addClass("active");
+</script>
+<script type="text/javascript">
+    $(function () {
+        $("#play_tab ul li").click(function () {
+            $("#play_tab ul li").removeClass('active');
+            $(this).addClass('active');
+            $("#play_tab_box .item").hide();
+            $("#play_tab_box .item").eq($("#play_tab ul li").index(this)).show();
+        })
+    });
+</script>

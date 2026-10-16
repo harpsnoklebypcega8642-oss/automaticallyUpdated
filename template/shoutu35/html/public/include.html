@@ -1,0 +1,19 @@
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport" />
+{php}require_once(substr($maccms['path_tpl'], strlen($maccms['path'])).'admin/function.php');{/php}
+{include file="public/seo"}
+{php}$static = $shoutu['basic']['static_is']==1?$shoutu['basic']['static']:'';{/php}
+{include file="public/style"}
+
+<link href="{$static|mac_default=''.$maccms.path_tpl.''}statics/css/style.css" rel="stylesheet" type="text/css" />
+<link href="{$static|mac_default=''.$maccms.path_tpl.''}statics/css/font/iconfont.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{$static|mac_default=''.$maccms.path_tpl.''}statics/js/jquery.min.js?v=3.3.1"></script>
+<script type="text/javascript" src="{$static|mac_default=''.$maccms.path_tpl.''}statics/js/layer/layer.js?v3.1.1"></script>
+<script type="text/javascript" src="{$static|mac_default=''.$maccms.path_tpl.''}statics/js/shoutu-site.js?v={$my['version']}"></script>
+<script type="text/javascript" src="{$static|mac_default=''.$maccms.path_tpl.''}statics/js/shoutu-ui.js?v={$my['version']}"></script>
+<script>var maccms={"path":"__ROOT__","mid":"{$maccms['mid']}","mob_status":"{$maccms['mob_status']}"};</script>
+<script src="{$maccms.path}static/js/home.js"></script>
+{:config_header($shoutu)}
+{if $shoutu.set.topadjs_is}
+{$shoutu.set.topadjs}
+{/if}

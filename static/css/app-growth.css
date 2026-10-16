@@ -1,0 +1,94 @@
+.app-growth-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+}
+
+.app-growth-modal__mask {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.72);
+}
+
+.app-growth-modal__panel {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 86%;
+    max-width: 360px;
+    padding: 28px 24px 24px;
+    border-radius: 12px;
+    background: #fff;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.app-growth-modal__panel h3 {
+    margin: 0 0 14px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #222;
+}
+
+.app-growth-modal__panel p {
+    margin: 0 0 22px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #555;
+}
+
+.app-growth-modal__panel a {
+    color: var(--basic-color, #ff5722);
+    text-decoration: none;
+}
+
+.app-growth-modal__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.app-growth-modal__actions .btn {
+    display: block;
+    width: 100%;
+    padding: 11px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.app-growth-modal__actions .btn-primary {
+    background: var(--basic-color, #ff5722);
+    color: #fff;
+}
+
+.app-growth-modal__actions .btn-default {
+    background: #f0f0f0;
+    color: #666;
+}
+
+.app-growth-bar {
+    display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 80px;
+    z-index: 99998;
+    padding: 10px 16px;
+    background: rgba(0, 0, 0, 0.82);
+    color: #fff;
+    font-size: 13px;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.app-growth-bar a {
+    color: var(--basic-color, #ff5722);
+    text-decoration: underline;
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    {include file="public/include"}
+    <link href="{$static|mac_default=''.$maccms.path_tpl.''}statics/css/index-home.css?v={$my['version']}" rel="stylesheet" type="text/css" />
+    <script defer src="{$static|mac_default=''.$maccms.path_tpl.''}statics/js/index-home.js?v={$my['version']}"></script>
+    <script defer src="{$static|mac_default=''.$maccms.path_tpl.''}statics/js/banner-api.js?v={$my['version']}"></script>
+</head>
+<body class="home-redesign type-redesign">
+    <div class="xhj-type-page">
+        <header class="xhj-type-page__header">
+            <!-- <div class="xhj-home__tabs" aria-label="鍒嗙被椤甸《閮ㄥ鑸?>">
+                <span class="xhj-home__tab">棣栭〉</span>
+                <span class="xhj-home__tab">鐏瑙嗛</span>
+                <span class="xhj-home__tab is-active">鐏鐭墽</span>
+                <span class="xhj-home__tab">搴旂敤涓嬭浇</span>
+            </div> -->
+
+            <div class="xhj-type-page__hero xhj-carousel" data-carousel data-banner-api data-interval="4200">
+                <div class="xhj-carousel__track"></div>
+                <div class="xhj-carousel__dots" aria-label="顶部轮播切换"></div>
+            </div>
+        </header>
+
+        <div class="xhj-type-panel">
+            <aside class="xhj-type-panel__aside">
+                <ul>
+                    {maccms:foreach name="$shoutu.nav.data" id="vo" key="key"}
+                        {if $vo.is}
+                        {if condition="$vo.type eq 'web'"}
+                        <li><a{if $vo.blank} target="_blank"{/if} href="{$vo.val}" title="{$vo.title}" {if condition="$vo['val'] == $obj['type_id']" } class="active" {/if}><span>{$vo.title}</span></a></li>
+                        {elseif condition="$vo.type eq 'url'"}
+                        <li><a{if $vo.blank} target="_blank"{/if} href="{:mac_url($vo.val)}" title="{$vo.title}" {if condition="$vo['val'] == $obj['type_id']" } class="active" {/if}><span>{$vo.title}</span></a></li>
+                        {else /}
+                        <li><a{if $vo.blank} target="_blank"{/if} href="{:mac_url_type(['type_mid'=>$vo.type,'type_id'=>$vo.val])}" title="{$vo.title}" {if condition="$vo['val'] == $obj['type_id']" } class="active" {/if}><span>{$vo.title}</span></a></li>
+                        {/if}
+                        {/if}
+                    {/maccms:foreach}
+                </ul>
+            </aside>
+
+            <section class="xhj-type-panel__content">
+                <div class="xhj-type-panel__head">
+                    <h1>{$obj.type_name}</h1>
+                </div>
+
+                <div class="xhj-poster-grid xhj-poster-grid--type">
+                    {maccms:vod num="30" paging="yes" pageurl="vod/type" type="current" order="desc" by="time" half="3"}
+                    <a href="{:mac_url_vod_detail($vo)}" class="xhj-poster-card" title="{$vo.vod_name}">
+                        <span class="xhj-poster-card__thumb">
+                            <img class="lazyload" src="{$shoutu.poster.lopimg}" alt="{$vo.vod_name}" data-original="{$vo.vod_pic|mac_url_img}">
+                        </span>
+                        <span class="xhj-poster-card__title txt-ov">{$vo.vod_name}</span>
+                    </a>
+                    {/maccms:vod}
+                </div>
+
+                <div class="pages fn-clear xhj-type-panel__pages">
+                    {include file="public/paging"}
+                </div>
+            </section>
+        </div>
+    </div>
+
+    {include file="public/foot"}
+</body>
+
+</html>

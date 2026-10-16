@@ -1,0 +1,13 @@
+<section class="nav-pills-section swiper-container" data-name="tags" data-space="15" data-breakpoints="0:4|480:8">
+    <div class="container swiper tags-swiper">
+        <div class="swiper-wrapper">
+            {maccms:type order="asc" by="sort" num="1"}
+            {maccms:foreach name=":explode(',',$vo.type_extend.class)" id="vo2" key="key2"}
+            <div class="swiper-slide">
+                <a {if condition="isset($param['class']) && $param['class'] eq $vo2"}class="swiper-tags ellipsis active"{else/}class="swiper-tags ellipsis"{/if} href="{:mac_url_type($vo,['class'=>$vo2],'show')}">{$vo2}</a>
+            </div>
+            {/maccms:foreach}
+            {/maccms:type}
+        </div>
+    </div>
+</section>

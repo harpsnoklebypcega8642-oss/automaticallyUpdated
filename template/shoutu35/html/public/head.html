@@ -1,0 +1,24 @@
+<header>
+    <div class="top_bg">
+        <div class="top_bg_desc">
+            <i class="top_icon"></i>
+            <h3>{$shoutu.basic.title}</h3>
+            <p>
+                {if $shoutu.basic.desc_is}
+                {$shoutu.basic.desc}
+                {/if}
+            </p>
+        </div>
+    </div>
+    {php}
+    $value = $shoutu['set']['seatext_is']==1?$shoutu['set']['seatext']:'';
+    {/php}
+    <div class="top_search_box">
+        <div class="ui-search">
+            <a href="{:mac_url('label/search')}">
+                <input type="text" id="wd" name="wd" class="search-input" value="{$value}"/>
+                <input type="submit" id="searchbutton"  class="search-button" value="" />
+            </a>
+        </div>
+    </div>
+</header>

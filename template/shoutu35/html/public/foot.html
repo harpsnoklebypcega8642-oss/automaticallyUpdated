@@ -1,0 +1,38 @@
+<div style="height: 80px;"></div>
+{maccms:foreach name="$shoutu.dialog.data" id="vo" key="key"}	
+<div class="shoutu-dialog {$vo.class} eject" id="Dialog{$vo.id}">
+	{if condition="$vo.class neq 'center'"}<a class="eject-close button {$vo.class}" href="javascript:;"><i class="icon icon-{$vo.class}"></i></a>{/if}
+	<div class="item">
+		<div class="panel margin-0">
+			{if condition="$vo.class eq 'center'"}
+			<div class="panel-hd col-space">
+				<h3>{$vo.title}</h3>
+				<a class="eject-close" href="javascript:;"><i class="icon icon-error"></i></a>
+			</div>
+			{/if}
+			<div class="panel-bd">
+				{$vo.code}
+			</div>
+		</div>
+	</div>
+</div>
+{/maccms:foreach}
+<footer>
+    <div class="footer">
+        <ul>
+            {maccms:foreach name="$shoutu.navfoot.data" id="vo" key="key"}	
+                {if $vo.is}
+				{if condition="$vo.type eq 'web'"} 
+				<li><a{if $vo.blank} target="_blank"{/if} href="{$vo.val}" class="mb-img">{if $vo.icon}<i class="icon {$vo.icon} font-24 bold"></i> {/if}<span>{$vo.title}</span></a></li>
+				{elseif condition="$vo.type eq 'url'"}
+				<li><a{if $vo.blank} target="_blank"{/if} href="{:mac_url($vo.val)}" class="mb-img">{if $vo.icon}<i class="icon {$vo.icon} font-24 bold"></i> {/if}<span>{$vo.title}</span></a></li>
+				{else /}
+				<li><a{if $vo.blank} target="_blank"{/if} href="{:mac_url_type(['type_mid'=>$vo.type,'type_id'=>$vo.val])}" class="mb-img">{if $vo.icon}<i class="icon {$vo.icon} font-24 bold"></i> {/if}<span>{$vo.title}</span></a></li>
+				{/if}
+				{/if}
+			{/maccms:foreach}
+        </ul>
+    </div>
+</footer>
+{if $shoutu.basic.foottips_is}{$shoutu.basic.foottips}{/if}
+{:config_footer($shoutu)}

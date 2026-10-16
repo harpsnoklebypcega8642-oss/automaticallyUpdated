@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    {include file="public/include"}
+</head>  
+<body id="type">
+    <!-- <header>
+        <div class="type_top_bg">
+            <div class="type_top_bg_desc">
+                <i class="top_icon"></i>
+                <h3>短剧分类</h3>
+                <p>免费观看短剧不付费</p>
+            </div>
+        </div>
+    </header>
+    <aside class="type_aside">
+        <ul>
+            {maccms:foreach name="$shoutu.nav.data" id="vo" key="key"}
+                {if $vo.is}	
+                {if condition="$vo.type eq 'web'"}
+                <li><a{if $vo.blank} target="_blank"{/if} href="{$vo.val}" title="{$vo.title}" {if condition="$vo['val'] == $obj['type_id']" } class="active" {/if}><span>{$vo.title}</span> </a></li>
+                {elseif condition="$vo.type eq 'url'"}
+                <li><a{if $vo.blank} target="_blank"{/if} href="{:mac_url($vo.val)}" title="{$vo.title}" {if condition="$vo['val'] == $obj['type_id']" } class="active" {/if}><span>{$vo.title}</span> </a></li>
+                {else /}
+                <li><a{if $vo.blank} target="_blank"{/if} href="{:mac_url_type(['type_mid'=>$vo.type,'type_id'=>$vo.val])}" title="{$vo.title}" {if condition="$vo['val'] == $obj['type_id']" } class="active" {/if}><span>{$vo.title}</span> </a></li>
+                {/if}
+                {/if}
+            {/maccms:foreach}
+        </ul>
+    </aside> -->
+
+    <section class="type_section">
+        <div class="box">
+            <div class="box_title">{$obj.type_name}</div>
+            <div class="box_con">
+                <ul class="img-list">
+                    {maccms:vod num="30" paging="yes" pageurl="vod/show" type="current" order="desc" by="time" half="3"}
+                    {include file="block/vod_box"}
+                    {/maccms:vod}
+                </ul>
+            </div>
+            <div class="pages fn-clear" style="margin-bottom: 80px;">
+                {include file="public/paging"}
+            </div>
+        </div>
+    </section>
+    {include file="public/foot"}
+</body>
+
+</html>

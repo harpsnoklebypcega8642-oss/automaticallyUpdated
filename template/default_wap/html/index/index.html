@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>{$maccms.site_name}</title>
+    <meta name="keywords" content="{$maccms.site_keywords}" />
+    <meta name="description" content="{$maccms.site_description}" />
+    {include file="public/include"}
+    <script defer src="{$maccms.path_tpl}js/index-home.js"></script>
+    <script defer src="{$maccms.path_tpl}js/banner-api.js"></script>
+</head>
+<body>
+{include file="public/head"}
+<header class="g_header g_header--hero">
+    <!-- <h1 class="s_l g_logo"><a href="{$maccms.path}"><img src="{$maccms.site_logo|mac_url_img}"></a></h1> -->
+    <label for="navSwitch" href="javascript:;" class="s_c mac_user"><i class="i_user"><span></span></i></label>
+    <label for="navSwitch" href="javascript:;" class="s_r s_bt"><i class="i_bread"><span></span></i></label>
+</header>
+<!-- banner 开始 -->
+<div class="xhj-carousel xhj-carousel--hero" data-carousel data-banner-api data-interval="4200">
+    <div class="xhj-carousel__track"></div>
+    <div class="xhj-carousel__dots" aria-label="顶部轮播切换"></div>
+</div>
+<nav class="menuNavList">
+    {maccms:type ids="parent" order="asc" by="sort"}
+    <a href="{:mac_url_type($vo)}">
+        <i class="menuNavIcon 
+        {if condition="$vo.type_name eq '体育'"}tyIcon
+        {else /}
+        {switch name="$vo.type_id" }
+        {case value="1"}dyIcon{/case}
+        {case value="2"}dsjIcon{/case}
+        {case value="3"}zyIcon{/case}
+        {case value="4"}dmIcon{/case}
+        {case value="5"}dspIcon{/case}
+        {case value="6"}dspIcon{/case}
+        {case value="7"}tyIcon{/case}{/switch}
+        {/if}">
+        </i>
+        <span class="sTit">{$vo.type_name}</span>
+    </a>
+    {/maccms:type}
+    <a href="{:mac_url('map/index')}"><i class="menuNavIcon bdIcon"></i><span class="sTit">排行</span></a>
+</nav>
+<section class="homeRecommendWrap">
+    <p class="homeRecommendMeta">本站由小火箭M团队运营 资源已更新至2026年</p>
+    <section class="homeRecommendCard">
+        <div class="homeRecommendHead">
+            <div class="homeRecommendTitle">最新推荐</div>
+            <a class="homeRecommendMore" href="{:mac_url('map/index')}">更多</a>
+        </div>
+        <div class="homeRecommendBody">
+            <ul class="homeRecommendGrid">
+                {maccms:vod num="9" type="1,2,3,4" order="desc" by="time"}
+                <li class="homeRecommendItem">
+                    <a href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}">
+                        <span class="homeRecommendPoster">
+                            <img src="{:mac_url_img($vo.vod_pic)}" alt="{$vo.vod_name}"/>
+                        </span>
+                        <strong>{$vo.vod_name}</strong>
+                        <p>{if condition="$vo.vod_actor neq ''"}{$vo.vod_actor|mac_substring=18}{else /}{$vo.type.type_name}{/if}</p>
+                    </a>
+                </li>
+                {/maccms:vod}
+            </ul>
+        </div>
+    </section>
+</section>
+<!-- 友情链接 -->
+<div id="link" class="block">
+    <div id="title">友情链接 LINK</div>
+    <ul>
+        <li><a href="https://www.maccms.pro/" target="_blank">苹果CMS-官网</a></li>
+        <li><a href="https://github.com/maccmspro" target="_blank">苹果CMS-Github</a></li>
+        {maccms:link num="10" order="desc" by="id"}
+        <li><a href="{$vo.link_url}" target="_blank">{$vo.link_name}</a></li>
+        {/maccms:link}
+        <div class="clear"></div>
+    </ul>
+</div>
+{include file="public/foot"}
+</body>
+</html>

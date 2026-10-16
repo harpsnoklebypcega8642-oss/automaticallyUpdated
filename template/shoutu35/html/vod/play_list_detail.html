@@ -1,0 +1,7 @@
+<section class="tab_box" id="play_tab_box">
+    <div class="video_list fn-clear">
+        {maccms:foreach name="obj.vod_play_list.1.urls" id="vo2"}
+        <a href="{:mac_url_vod_play($obj,['sid'=>$vo.sid,'nid'=>$vo2.nid])}" class="{if condition="$param.nid eq $vo2.nid"}btn-warm{else}btn-default{/if} txt-ov">{$vo2.name}</a>
+        {/maccms:foreach}
+    </div>
+</section>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    {include file="public/include"}
+    <link href="{$static|mac_default=''.$maccms.path_tpl.''}statics/css/index-home.css?v={$my['version']}" rel="stylesheet" type="text/css" />
+    <script defer src="{$static|mac_default=''.$maccms.path_tpl.''}statics/js/index-home.js?v={$my['version']}"></script>
+    <script defer src="{$static|mac_default=''.$maccms.path_tpl.''}statics/js/banner-api.js?v={$my['version']}"></script>
+</head>
+<body>
+    <header>
+        <div class="shoutu-mhead clearfix">
+            <h3>短剧详情</h3>
+            <div class="go-back">
+                <a href="javascript:void(0);" onclick="history.back();"><?xml version="1.0" encoding="UTF-8"?><svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M31 36L19 24L31 12" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+            <div class="go-share">
+                <p class="content" style="display: none;">我正在观看{$obj.vod_name}{$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}，地址：{$maccms.site_url}{:mac_url_vod_play($obj,['sid'=>$param['sid'],'nid'=>$param['nid']])}</p>
+                <a class="myui-copy-html" data-text="" href="javascript:;"><svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M28 6H42V20" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path><path d="M42 29.4737V39C42 40.6569 40.6569 42 39 42H9C7.34315 42 6 40.6569 6 39V9C6 7.34315 7.34315 6 9 6L18 6" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path><path d="M25.7998 22.1999L41.0998 6.8999" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+            </div>
+        </div>
+    </header>
+    <section>
+        <div id="detail-box">
+            <div class="detail-cols fn-clear">
+                <div class="detail-pic fn-left">
+                    <img src="{:mac_url_img($obj.vod_pic)}" alt="{$obj.vod_name}" />
+                </div>
+                <div class="detail-info fn-left">
+                    <div class="detail-title fn-clear"  >
+                        <h1 class="txt-ov">{$obj.vod_name}</h1>
+                    </div>
+                    <div class="info fn-clear">
+                        <dl class="nyzhuy">
+                            <dt>主角：</dt>
+                            <dd class="txt-ov">{notempty name="obj.vod_actor"}{$obj.vod_actor|mac_url_create='actor'}{else/}未录入{/notempty}
+                            </dd>
+                        </dl>
+    
+                        <dl>
+                            <dt>分类：</dt>
+                            <dd>{maccms:foreach name=":explode(',',$obj.vod_class)"}
+                                <a href="{:mac_url_type($obj['type'],['class'=>$vo],'show')}">{$vo}</a>{/maccms:foreach}</dd>
+                        </dl>
+                        <dl>
+                            <dt>状态：</dt>
+                            <dd>{$obj.vod_remarks}</dd>
+                        </dl>
+                    </div>
+                    <div class="play-btn">
+                        <a href="{:mac_url_vod_play($obj)}">立即播放</a>
+                    </div>
+                </div>
+            </div>
+            <div class="content-cols">
+                <div class="content-title">电影简介</div>
+                <div class="content-info txt-ov-3">
+                    {$obj.vod_content}
+                </div>
+            </div>
+        </div>
+    </section>
+    {include file="vod/play_list_detail"}
+    <section id="like">
+        {maccms:foreach name="$shoutu.play.data" id="for" key="key"}
+        {include file="public/vod_for"}
+        {/maccms:foreach}
+    </section>
+
+    <section class="xhj-detail-promo">
+        <div class="xhj-home__promo-carousel xhj-carousel xhj-carousel--promo" data-carousel data-banner-api data-interval="5000">
+            <div class="xhj-carousel__track"></div>
+            <div class="xhj-carousel__dots" aria-label="详情页底部轮播切换"></div>
+        </div>
+    </section>
+
+	<span class="mac_hits hits hide" data-mid="{$maccms.mid}" data-id="{$obj.vod_id}{$obj.art_id}{$obj.topic_id}" data-type="hits"></span>
+	<span class="mac_ulog_set hide" data-type="4" data-mid="{$maccms.mid}" data-id="{$obj.vod_id}" data-sid="{$param.sid}" data-nid="{$param.nid}"></span>
+	    
+    {include file="public/foot"}
+
+   
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+<link rel="manifest" href="{$static|mac_default=''.$maccms.path_tpl.''}statics/app/manifest.json">
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('{$static|mac_default=''.$maccms.path_tpl.''}statics/app/service-worker.js')
+      .then(registration => {
+        console.log('Service Worker registered:', registration);
+      })
+      .catch(error => {
+        console.log('Service Worker registration failed:', error);
+      });
+  });
+}
+</script>
+<style>:root{--basic-color: {$shoutu.basic.color};--poster-high: {$shoutu.poster.high}%;--poster-radius: {$shoutu.poster.radius}px;}</style>

@@ -1,0 +1,32 @@
+<div id="app-growth-modal" class="app-growth-modal">
+    <div class="app-growth-modal__mask" onclick="PopopGrowth.hideModal()"></div>
+    <div class="app-growth-modal__panel">
+        <h3>试看已结束</h3>
+        <p>网页端试看时长为 <strong>15 分钟</strong>。如需观看完整视频，请前往 <a href="https://xhj.im" target="_blank">https://xhj.im</a> 官网下载「<strong>小火箭</strong>」App 继续观看。</p>
+        <div class="app-growth-modal__actions">
+            <a class="btn btn-primary" href="https://xhj.im">前往 https://xhj.im 下载小火箭</a>
+            <button class="btn btn-default" type="button" onclick="PopopGrowth.hideModal()">我知道了</button>
+        </div>
+    </div>
+</div>
+
+<div id="app-growth-bar" class="app-growth-bar">
+    试看已结束 · 完整版请 <a href="https://xhj.im">前往 https://xhj.im 下载小火箭 App</a>
+</div>
+
+<script>
+    window.PopopGrowth = window.PopopGrowth || {};
+    PopopGrowth.config = {
+        enabled: true,
+        limitSeconds: 15 * 60,
+        uaToken: 'Popop_Client',
+        downloadUrl: 'https://xhj.im',
+        appName: '小火箭',
+        title: '试看已结束',
+        closable: true,
+        replayWithinLimit: true,
+        showModalOnReplay: true,
+        showBarOnDismiss: true
+    };
+</script>
+<script type="text/javascript" src="{$maccms.path}static/js/app-growth.js"></script>

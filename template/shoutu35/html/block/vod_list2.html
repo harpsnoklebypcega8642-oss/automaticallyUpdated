@@ -1,0 +1,17 @@
+{if condition="$for.is && $for.block eq 'vod_list2'"} 
+<div class="box">
+    <div class="title clearfix">
+        <h2>{$for.title}</h2>
+        {if $for.subval}
+        <a href="{$for.subval}">更多</a>
+        {/if}
+    </div>
+    <div class="box_con">
+        <ul class="img-list">
+            {maccms:foreach name=":config_vodlist($for,3,$obj.vod_id)" id="vo" key="key"}
+            {include file="block/vod_box"}
+            {/maccms:foreach}
+        </ul>
+    </div>
+</div>
+{/if}

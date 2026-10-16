@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport" />
+    {php}require_once(substr($maccms['path_tpl'], strlen($maccms['path'])).'admin/function.php');{/php}
+    {include file="seo/label_search"}
+    {php}$static = $shoutu['basic']['static_is']==1?$shoutu['basic']['static']:'';{/php}
+    {include file="public/style"}
+    <link href="{$static|mac_default=''.$maccms.path_tpl.''}statics/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="{$static|mac_default=''.$maccms.path_tpl.''}statics/css/font/iconfont.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{$static|mac_default=''.$maccms.path_tpl.''}statics/js/jquery.min.js?v=3.3.1"></script>
+    <script type="text/javascript" src="{$static|mac_default=''.$maccms.path_tpl.''}statics/js/layer/layer.js?v3.1.1"></script>
+    <script type="text/javascript" src="{$static|mac_default=''.$maccms.path_tpl.''}statics/js/shoutu-site.js?v={$my['version']}"></script>
+    <script type="text/javascript" src="{$static|mac_default=''.$maccms.path_tpl.''}statics/js/shoutu-ui.js?v={$my['version']}"></script>
+    <script>var maccms={"path":"__ROOT__","mid":"{$maccms['mid']}","mob_status":"{$maccms['mob_status']}"};</script>
+    <script src="{$maccms.path}static/js/home.js"></script>
+    {:config_header($shoutu)}
+    {if $shoutu.set.topadjs_is}
+    {$shoutu.set.topadjs}
+    {/if}
+</head>
+<body>
+    {php}
+    $value = $shoutu['set']['seatext_is']==1?$shoutu['set']['seatext']:'';
+    {/php}
+    <header>
+        <div class="top_search_box label-search">
+            <div class="ui-search">
+                <form id="search" name="search" method="POST" action="{:mac_url('vod/search')}" onSubmit="return qrsearch();">
+                    <input type="text" id="wd" name="wd" class="search-input" value="<?php echo $value;?>" onfocus="if(this.value=='<?php echo $value;?>'){this.value='';}" onblur="if(this.value==''){this.value='<?php echo $value;?>';};" />
+                    <input type="submit" id="searchbutton"  class="search-button" value="" />
+                </form>
+            </div>
+            <div class="go-index"><a href="{$maccms.path}">取消</a></div>
+        </div>
+    </header>
+    {if $shoutu['set']['seahot_is']}
+    <section>
+        <div class="hot-search">
+            <div class="title">热门搜索</div>
+            <ul>
+                {maccms:foreach name=":explode(',',''.$shoutu['set']['seahot'].'')" id="vo" key="key"}
+                <li><a href="{:mac_url('vod/search',['wd'=>$vo])}" title="{$vo}">{$vo}</a></li>
+                {/maccms:foreach}
+            </ul>
+        </div>
+    </section>
+    {/if}
+    <section>
+        <div class="all-like">
+            <div class="title">大家最爱搜</div>
+            <ul>
+                {maccms:vod num="8"  order="desc" by="hits" level="8"}
+                <li class="txt-ov"><a href="{:mac_url_vod_detail($vo)}"><span>NO.{$key}</span>{$vo.vod_name}</a></li>
+                {/maccms:vod}
+            </ul>
+        </div>
+    </section>
+
+
+    {include file="public/foot"}
+</body>
+
+</html>
