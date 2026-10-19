@@ -4,7 +4,7 @@
     var XhjBanner = window.XhjBanner || {};
 
     XhjBanner.config = {
-        externalApi: 'https://app.xhjim.app/api/v1/common/explore-list',
+        externalApi: 'https://app.xhj.im/api/v1/common/explore-list',
         imageBase: 'https://app.xhj.im',
         proxyApi: (window.maccms && window.maccms.path ? window.maccms.path : '') + '/api.php/explore/banner_list/'
     };

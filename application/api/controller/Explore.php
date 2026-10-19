@@ -6,7 +6,7 @@ use think\Request;
 
 class Explore extends Base
 {
-    const API_URL = 'https://app.xhjim.app/api/v1/common/explore-list';
+    const API_URL = 'https://app.xhj.im/api/v1/common/explore-list';
     const IMAGE_BASE = 'https://app.xhj.im';
     const CACHE_KEY = 'explore_idx_banner_list_v6';
     const CACHE_TTL = 300;
