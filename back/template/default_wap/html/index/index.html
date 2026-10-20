@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>{$maccms.site_name}</title>
+    <meta name="keywords" content="{$maccms.site_keywords}" />
+    <meta name="description" content="{$maccms.site_description}" />
+    {include file="public/include"}
+    <script src="{$maccms.path_tpl}js/jquery.glide.js"></script>
+    <script type="text/javascript">
+        //var jq=jQuery.noConflict();
+    </script>
+</head>
+<body>
+{include file="public/head"}
+<header class="g_header g_header--hero">
+    <!-- <h1 class="s_l g_logo"><a href="{$maccms.path}"><img src="{$maccms.site_logo|mac_url_img}"></a></h1> -->
+    <label for="navSwitch" href="javascript:;" class="s_c mac_user"><i class="i_user"><span></span></i></label>
+    <label for="navSwitch" href="javascript:;" class="s_r s_bt"><i class="i_bread"><span></span></i></label>
+</header>
+<!-- banner 开始 -->
+<div class="slider">
+    <ul class="slides">
+        <li class="slide">
+            <div class="boxb">
+                <a href="javascript:;" title="GL体育轮播图"><img src="{$maccms.path_tpl}images/banner/gl.png" alt="GL体育轮播图" /></a>
+            </div>
+        </li>
+        <li class="slide">
+            <div class="boxb">
+                <a href="javascript:;" title="冠军娱乐轮播图"><img src="{$maccms.path_tpl}images/banner/champion.png" alt="冠军娱乐轮播图" /></a>
+            </div>
+        </li>
+        <li class="slide">
+            <div class="boxb">
+                <a href="javascript:;" title="蓝火体育轮播图"><img src="{$maccms.path_tpl}images/banner/lanhuo.png" alt="蓝火体育轮播图" /></a>
+            </div>
+        </li>
+    </ul>
+</div>
+<script type="text/javascript">
+    var glide = $('.slider').glide({
+        //autoplay:true,//是否自动播放 默认值 true如果不需要就设置此值
+        animationTime:500, //动画过度效果，只有当浏览器支持CSS3的时候生效
+        arrows:true, //是否显示左右导航器
+        arrowsWrapperClass: "arrowsWrapper",//滑块箭头导航器外部DIV类名
+        arrowMainClass: "slider-arrow",//滑块箭头公共类名
+        arrowRightClass:"slider-arrow--right",//滑块右箭头类名
+        arrowLeftClass:"slider-arrow--left",//滑块左箭头类名
+        arrowRightText:">",//定义左右导航器文字或者符号也可以是类
+        arrowLeftText:"<",
+        nav:true, //主导航器也就是本例中显示的小方块
+        navCenter:true, //主导航器位置是否居中
+        navClass:"slider-nav",//主导航器外部div类名
+        navItemClass:"slider-nav__item", //本例中小方块的样式
+        navCurrentItemClass:"slider-nav__item--current" //被选中后的样式
+    });
+</script>
+<!-- 图标导航 -->
+<div class="bannerPromoList">
+    <a class="bannerPromoItem" href="javascript:;" title="蓝火体育推荐图">
+        <img src="{$maccms.path_tpl}images/banner/lanhuo.png" alt="蓝火体育推荐图" />
+    </a>
+    <a class="bannerPromoItem" href="javascript:;" title="GL体育推荐图">
+        <img src="{$maccms.path_tpl}images/banner/gl.png" alt="GL体育推荐图" />
+    </a>
+</div>
+<nav class="menuNavList">
+    {maccms:type ids="parent" order="asc" by="sort"}
+    <a href="{:mac_url_type($vo)}">
+        <i class="menuNavIcon 
+        {if condition="$vo.type_name eq '体育'"}tyIcon
+        {else /}
+        {switch name="$vo.type_id" }
+        {case value="1"}dyIcon{/case}
+        {case value="2"}dsjIcon{/case}
+        {case value="3"}zyIcon{/case}
+        {case value="4"}dmIcon{/case}
+        {case value="5"}dspIcon{/case}
+        {case value="6"}dspIcon{/case}
+        {case value="7"}tyIcon{/case}{/switch}
+        {/if}">
+        </i>
+        <span class="sTit">{$vo.type_name}</span>
+    </a>
+    {/maccms:type}
+    <a href="{:mac_url('map/index')}"><i class="menuNavIcon bdIcon"></i><span class="sTit">排行</span></a>
+</nav>
+<section class="homeRecommendWrap">
+    <p class="homeRecommendMeta">本站由小火箭M团队运营 资源已更新至2026年</p>
+    <section class="homeRecommendCard">
+        <div class="homeRecommendHead">
+            <div class="homeRecommendTitle">最新推荐</div>
+            <a class="homeRecommendMore" href="{:mac_url('map/index')}">更多</a>
+        </div>
+        <div class="homeRecommendBody">
+            <ul class="homeRecommendGrid">
+                {maccms:vod num="9" type="1,2,3,4" order="desc" by="time"}
+                <li class="homeRecommendItem">
+                    <a href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}">
+                        <span class="homeRecommendPoster">
+                            <img src="{:mac_url_img($vo.vod_pic)}" alt="{$vo.vod_name}"/>
+                        </span>
+                        <strong>{$vo.vod_name}</strong>
+                        <p>{if condition="$vo.vod_actor neq ''"}{$vo.vod_actor|mac_substring=18}{else /}{$vo.type.type_name}{/if}</p>
+                    </a>
+                </li>
+                {/maccms:vod}
+            </ul>
+        </div>
+    </section>
+</section>
+<!-- 友情链接 -->
+<div id="link" class="block">
+    <div id="title">友情链接 LINK</div>
+    <ul>
+        <li><a href="https://www.maccms.pro/" target="_blank">苹果CMS-官网</a></li>
+        <li><a href="https://github.com/maccmspro" target="_blank">苹果CMS-Github</a></li>
+        {maccms:link num="10" order="desc" by="id"}
+        <li><a href="{$vo.link_url}" target="_blank">{$vo.link_name}</a></li>
+        {/maccms:link}
+        <div class="clear"></div>
+    </ul>
+</div>
+{include file="public/foot"}
+</body>
+</html>

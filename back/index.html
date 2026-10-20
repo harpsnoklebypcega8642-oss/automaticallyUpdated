@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频首页</title> 
+    <meta name="keywords" content="短视频,搞笑视频,视频分享,免费视频,在线视频,预告片" />
+    <meta name="description" content="提供最新最快的视频分享数据" />
+
+<link rel="shortcut icon" href="/template/default_pc/images/favicon.ico" />
+<link rel='stylesheet' id='swiper-style-css' href='/template/default_pc/css/swiper-bundle.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='style-css' href='/template/default_pc/css/style.css' type='text/css' media='all' />
+<script src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js"></script>
+<script>
+var system = { win: false, mac: false, x11: false }; var p = navigator.platform.toLowerCase(); system.win = p.includes("win"); system.mac = p.includes("mac"); 
+var observer = new MutationObserver(function (mutations) {
+    mutations.forEach(function (mutation) { if (mutation.attributeName === 'style') { var targetElement = mutation.target; var newStyle = targetElement.getAttribute('style'); var tagName = targetElement.tagName; if (['body', 'html'].includes(targetElement.tagName.toLowerCase()) && newStyle?.includes('--sj-')) { console.log('阻止了', tagName, '的style属性变化: 包含--sj-'); observer.disconnect(); mutation.target.setAttribute('style', mutation.oldValue || ''); observer.observe(document.documentElement, config); } else { if (['body', 'html'].includes(targetElement.tagName.toLowerCase())) { console.log('元素发生了style属性变化:', { tagName: targetElement.tagName, id: targetElement.id, className: targetElement.className, newStyle: newStyle }); } } } });
+});
+var config = { attributes: true, attributeFilter: ['style'], attributeOldValue: true, subtree: true };
+observer.observe(document.documentElement, config); 
+var maccms = {"path":"","mid":"","aid":"1","url":"www.test.cn","wapurl":"wap.test.cn","mob_status":"0"};
+</script>
+<script src="/static/js/home.js"></script>
+<style type="text/css">
+    * {
+        --sj-reader-screen-height: 0 !important;
+    }
+
+    [id^="__sj_"],
+    [class^="__sj_"],
+    main.sj-play,
+    [class^="sj-"] {
+        display: none !important;
+    }
+</style>
+</head>
+<body class="ui ui-home">
+<header class="app app-header">
+    <div class="container">
+        <h1 class="nav-logo">
+            <a href="/">
+                <img src="/static/images/logo.jpg" alt="免费短视频分享大全 - 大中国">
+            </a>
+        </h1>
+        <div class="nav-icon search-form">
+            <form id="search" action="/index.php/vod/search.html" method="get" onSubmit="return qrsearch();">
+                <input class="search-input" name="wd" placeholder="短剧..." type="text" value="">
+                <a class="search-help" href="/index.php/label/rank.html" title="全部短剧" aria-label="全部短剧">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 12H7V21H3V12ZM17 8H21V21H17V8ZM10 2H14V21H10V2Z"></path>
+                    </svg>
+                </a>
+                <input class="search-submit" type="submit" value="搜索">
+            </form>
+        </div>
+    </div>
+</header>
+    <main class="app app-main">
+        <section class="swiper-container" data-name="hot" data-loop="true" data-center="yes" data-space="15"
+            data-autoplay="5000" data-breakpoints="0:2">
+            <div class="swiper hot-swiper">
+                <div class="swiper-wrapper">
+                                    </div>
+            </div>
+        </section>
+        <section class="swiper-container" data-name="tags" data-loop="true" data-space="15" data-autoplay="5000" data-breakpoints="0:4|480:8">
+            <div class="container swiper tags-swiper">
+                <div class="swiper-wrapper">
+                                            <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E5%96%9C%E5%89%A7/id/1.html">喜剧</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E7%88%B1%E6%83%85/id/1.html">爱情</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E6%81%90%E6%80%96/id/1.html">恐怖</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E5%8A%A8%E4%BD%9C/id/1.html">动作</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E7%A7%91%E5%B9%BB/id/1.html">科幻</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E5%89%A7%E6%83%85/id/1.html">剧情</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E6%88%98%E4%BA%89/id/1.html">战争</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E8%AD%A6%E5%8C%AA/id/1.html">警匪</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E7%8A%AF%E7%BD%AA/id/1.html">犯罪</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E5%8A%A8%E7%94%BB/id/1.html">动画</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E5%A5%87%E5%B9%BB/id/1.html">奇幻</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E6%AD%A6%E4%BE%A0/id/1.html">武侠</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E5%86%92%E9%99%A9/id/1.html">冒险</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E6%9E%AA%E6%88%98/id/1.html">枪战</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E6%81%90%E6%80%96/id/1.html">恐怖</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E6%82%AC%E7%96%91/id/1.html">悬疑</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E6%83%8A%E6%82%9A/id/1.html">惊悚</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E7%BB%8F%E5%85%B8/id/1.html">经典</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E9%9D%92%E6%98%A5/id/1.html">青春</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E6%96%87%E8%89%BA/id/1.html">文艺</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E5%BE%AE%E7%94%B5%E5%BD%B1/id/1.html">微电影</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E5%8F%A4%E8%A3%85/id/1.html">古装</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E5%8E%86%E5%8F%B2/id/1.html">历史</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E8%BF%90%E5%8A%A8/id/1.html">运动</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E5%86%9C%E6%9D%91/id/1.html">农村</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E5%84%BF%E7%AB%A5/id/1.html">儿童</a>
+                        </div>
+                                                <div class="swiper-slide">
+                            <a class="swiper-tags ellipsis" href="/index.php/vod/show/class/%E7%BD%91%E7%BB%9C%E7%94%B5%E5%BD%B1/id/1.html">网络电影</a>
+                        </div>
+                                        </div>
+            </div>
+        </section>
+        <section class="items-container">
+            <div class="container items">
+                <h2 class="items-title">最新更新</h2>
+                <ul>
+                                    </ul>
+            </div>
+        </section>
+    </main>
+<footer class="app app-footer">
+    <nav class="menu-nf-footer-container">
+        <ul id="menu-nf-footer" class="nav-items">
+            <li id="menu-item-1930" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1930">
+                <a href="/">免费短视频分享大全 - 大中国</a>
+            </li>
+            <li id="menu-item-1954" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1954">
+                <a href="/index.php/rss/baidu.xml">站点地图</a>
+            </li>
+        </ul>
+    </nav>
+    <script type="text/javascript" src="/template/default_pc/js/swiper-bundle.min.js" id="swiper-script-js" defer="defer" data-wp-strategy="defer"></script>
+    <script type="text/javascript" src="/template/default_pc/js/main.min.js" id="site-script-js" defer="defer" data-wp-strategy="defer"></script>
+</footer>
+</body>
+</html>

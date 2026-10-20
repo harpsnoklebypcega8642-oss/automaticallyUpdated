@@ -1,0 +1,24 @@
+<!-- 页头 -->
+<input type="checkbox" id="navSwitch">
+<header class="g_nav trans">
+    <div class="g_wrap_p g_nav__shell">
+        <div class="g_nav__search">
+            <form id="search" name="search" method="get" action="{:mac_url('vod/search')}" class="g_nav__searchForm" onSubmit="return qrsearch();">
+                <input type="text" id="wd" name="wd" class="g_nav__searchInput" placeholder="我想赚几个亿很合理吧" />
+                <button type="submit" id="searchbutton" class="g_nav__searchButton" aria-label="搜索">
+                    <svg class="g_nav__searchIcon" width="51" height="52" viewBox="0 0 51 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <circle cx="24.1415" cy="24.1429" r="17.9524" stroke="#3F4652" stroke-width="4.95238"/>
+                        <path d="M37.7598 39L47.0457 48.5253" stroke="#3F4652" stroke-width="4.95238"/>
+                    </svg>
+                </button>
+            </form>
+        </div>
+        <div class="g_nav__chips">
+            <a class="g_nav__chip" href="{:mac_url('vod/search',['wd'=>'变形金刚'])}">变形金刚</a>
+            <a class="g_nav__chip" href="{:mac_url('vod/search',['wd'=>'火影忍者'])}">火影忍者</a>
+            <a class="g_nav__chip" href="{:mac_url('vod/search',['wd'=>'复仇者联盟'])}">复仇者联盟</a>
+            <a class="g_nav__chip" href="{:mac_url('vod/search',['wd'=>'狼'])}">狼</a>
+            <a class="g_nav__chip" href="{:mac_url('vod/search',['wd'=>'红海行动'])}">红海行动</a>
+        </div>
+    </div>
+</header>
