@@ -35,5 +35,6 @@ return array (
     'param' => 'http://fundof.tv/admin.php/admin/collect/api.html?ac=cj&cjflag=90b8b377262234c37e5d5b9055dd8e40&cjurl=https%3A%2F%2Fcaiji.maotaizy.cc%2Fapi.php%2Fprovide%2Fvod%2Ffrom%2Fmtm3u8%2Fat%2Fxml%2F&h=24&t=&ids=&wd=&type=1&mid=1&opt=0&filter=0&filter_from=&param=',
     'weeks' => '1,2,3,4,5,6,0',
     'hours' => '01,06,11,16,20',
+    'runtime' => 1792735375,
   ),
 );

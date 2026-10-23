@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:42:"template/default_wap/html/index/index.html";i:1792465063;s:70:"/www/wwwroot/m.fundof.tv/template/default_wap/html/public/include.html";i:1792465063;s:67:"/www/wwwroot/m.fundof.tv/template/default_wap/html/public/head.html";i:1792465063;s:67:"/www/wwwroot/m.fundof.tv/template/default_wap/html/public/foot.html";i:1792465063;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:42:"template/default_wap/html/index/index.html";i:1792571142;s:65:"/www/wwwroot/fundof/template/default_wap/html/public/include.html";i:1792571142;s:62:"/www/wwwroot/fundof/template/default_wap/html/public/head.html";i:1792571142;s:62:"/www/wwwroot/fundof/template/default_wap/html/public/foot.html";i:1792571142;}*/ ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>

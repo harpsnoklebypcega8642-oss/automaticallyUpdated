@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:43:"template/default_wap/html/comment/ajax.html";i:1783483108;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:43:"template/default_wap/html/comment/ajax.html";i:1792571142;}*/ ?>
     <!--评论开始-->
     <form class="comment_form cmt_form clearfix"  >
         <input type="hidden" name="comment_pid" value="0">
@@ -10,7 +10,7 @@
                     <i class="icon-face"></i>
                 </div>
                 <div class="comment_face_box face-box">
-                    <?php $__FOR_START_1573553613__=1;$__FOR_END_1573553613__=16;for($i=$__FOR_START_1573553613__;$i <= $__FOR_END_1573553613__;$i+=1){ ?>
+                    <?php $__FOR_START_1601479392__=1;$__FOR_END_1601479392__=16;for($i=$__FOR_START_1601479392__;$i <= $__FOR_END_1601479392__;$i+=1){ ?>
                     <img data-id="<?php echo $i; ?>" src="/static/images/face/<?php echo $i; ?>.gif">
                     <?php } ?>
                 </div>

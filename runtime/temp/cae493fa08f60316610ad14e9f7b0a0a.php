@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:42:"template/default_wap/html/public/jump.html";i:1783483108;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:42:"template/default_wap/html/public/jump.html";i:1792571142;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

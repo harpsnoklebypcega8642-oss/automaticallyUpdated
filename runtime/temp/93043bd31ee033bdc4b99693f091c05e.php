@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:41:"template/default_wap/html/user/login.html";i:1783483108;s:68:"/www/wwwroot/m.fundof.tv/template/default_wap/html/user/include.html";i:1783483108;s:65:"/www/wwwroot/m.fundof.tv/template/default_wap/html/user/foot.html";i:1783483108;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:41:"template/default_wap/html/user/login.html";i:1792571142;s:63:"/www/wwwroot/fundof/template/default_wap/html/user/include.html";i:1792571142;s:60:"/www/wwwroot/fundof/template/default_wap/html/user/foot.html";i:1792571142;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>

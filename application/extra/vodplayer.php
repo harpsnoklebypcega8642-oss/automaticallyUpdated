@@ -4,14 +4,26 @@ return array (
   array (
     'status' => '1',
     'from' => 'mtm3u8',
-    'show' => '茅台资源',
-    'des' => '茅台资源',
+    'show' => '如意资源站',
+    'des' => '如意资源站',
     'target' => '_self',
     'ps' => '0',
-    'parse' => 'https://maotai888.vip:966/?url=',
-    'sort' => '10000',
-    'tip' => 'mtzy.me mtzy0.com maotaizy.cc  maotaizy.com  maotaiziyuan.com',
+    'parse' => 'https://ruyiplayer.com?url=',
+    'sort' => '10002',
+    'tip' => '',
     'id' => 'mtm3u8',
+  ),
+  'iqym3u8' => 
+  array (
+    'status' => '1',
+    'from' => 'iqym3u8',
+    'show' => '爱奇艺资源站',
+    'des' => '',
+    'target' => '_self',
+    'ps' => '0',
+    'parse' => 'https://www.iqiyizyjx.com/?url=',
+    'sort' => '10001',
+    'tip' => '',
   ),
   'mtyun' => 
   array (
