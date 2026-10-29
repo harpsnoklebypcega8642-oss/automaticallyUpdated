@@ -13,5 +13,5 @@ nohup*
 .well-known
 node_modules/
 application/data/install/install.lock
-runtime/*.php
+runtime/*
 application/extra/*
