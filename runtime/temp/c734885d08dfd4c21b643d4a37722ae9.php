@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:39:"template/default_wap/html/vod/type.html";i:1792571142;s:65:"/www/wwwroot/fundof/template/default_wap/html/public/include.html";i:1792571142;s:62:"/www/wwwroot/fundof/template/default_wap/html/public/head.html";i:1792571142;s:64:"/www/wwwroot/fundof/template/default_wap/html/public/paging.html";i:1792571142;s:62:"/www/wwwroot/fundof/template/default_wap/html/public/foot.html";i:1792571142;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:39:"template/default_wap/html/vod/type.html";i:1793188351;s:65:"/www/wwwroot/fundof/template/default_wap/html/public/include.html";i:1792571142;s:62:"/www/wwwroot/fundof/template/default_wap/html/public/head.html";i:1792571142;s:64:"/www/wwwroot/fundof/template/default_wap/html/public/paging.html";i:1792571142;s:62:"/www/wwwroot/fundof/template/default_wap/html/public/foot.html";i:1792571142;}*/ ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -52,7 +52,7 @@
 <header class="g_header g_header--hero g_header--hero-inner">
     <a href="javascript:MAC.GoBack()" class="s_l g_header__back"><i class="moreArrow2"></i><span>返回</span></a>
     <h1 class="g_header__title"><?php echo $obj['type_name']; ?></h1>
-    <label for="navSwitch" href="javascript:;" class="s_c mac_user"><i class="i_user"><span></span></i></label>
+    <label for="navSwitch" href="javascript:;" class="s_c mac_user"><i class=""><span></span></i></label>
     <label for="navSwitch" href="javascript:;" class="s_r s_bt"><i class="i_bread"><span></span></i></label>
 </header>
 <div class="xhj-carousel xhj-carousel--hero" data-carousel data-banner-api data-interval="4200">
@@ -73,7 +73,7 @@
                 <div class="con" id="first_list_p">
                     <p>
             <a <?php if($param['class'] == ''): ?> class="cur" <?php endif; ?> href="<?php echo mac_url_type($obj,['area'=>$param['area'],'lang'=>$param['lang'],'year'=>$param['year'],'level'=>$param['level'],'letter'=>$param['letter'],'state'=>$param['state'],'tag'=>$param['tag'],'class'=>'','order'=>$param['order'],'by'=>$param['by'] ],'show'); ?>">全部</a>
-            <?php $_6ad9e8eed6765=explode(',',$obj['type_extend']['class']); if(is_array($_6ad9e8eed6765) || $_6ad9e8eed6765 instanceof \think\Collection || $_6ad9e8eed6765 instanceof \think\Paginator): if( count($_6ad9e8eed6765)==0 ) : echo "" ;else: foreach($_6ad9e8eed6765 as $key2=>$vo2): ?>
+            <?php $_6ae1e5ae8a4f2=explode(',',$obj['type_extend']['class']); if(is_array($_6ae1e5ae8a4f2) || $_6ae1e5ae8a4f2 instanceof \think\Collection || $_6ae1e5ae8a4f2 instanceof \think\Paginator): if( count($_6ae1e5ae8a4f2)==0 ) : echo "" ;else: foreach($_6ae1e5ae8a4f2 as $key2=>$vo2): ?>
             <a <?php if($param['class'] == $vo2): ?> class="cur" <?php endif; ?> href="<?php echo mac_url_type($obj,['area'=>$param['area'],'lang'=>$param['lang'],'year'=>$param['year'],'level'=>$param['level'],'letter'=>$param['letter'],'state'=>$param['state'],'tag'=>$param['tag'],'class'=>$vo2,'order'=>$param['order'],'by'=>$param['by'] ],'show'); ?>"><?php echo $vo2; ?></a>
             <?php endforeach; endif; else: echo "" ;endif; ?>
                     </p>
@@ -82,7 +82,7 @@
             <div class="con" id="second_list_p">
                 <p>
                     <a <?php if($param['area'] == ''): ?> class="cur" <?php endif; ?> href="<?php echo mac_url_type($obj,['area'=>'','lang'=>$param['lang'],'year'=>$param['year'],'level'=>$param['level'],'letter'=>$param['letter'],'state'=>$param['state'],'tag'=>$param['tag'],'class'=>$param['class'],'order'=>$param['order'],'by'=>$param['by'] ],'show'); ?>">全部</a>
-                    <?php $_6ad9e8eed6730=explode(',',$obj['type_extend']['area']); if(is_array($_6ad9e8eed6730) || $_6ad9e8eed6730 instanceof \think\Collection || $_6ad9e8eed6730 instanceof \think\Paginator): if( count($_6ad9e8eed6730)==0 ) : echo "" ;else: foreach($_6ad9e8eed6730 as $key2=>$vo2): ?>
+                    <?php $_6ae1e5ae8a4c4=explode(',',$obj['type_extend']['area']); if(is_array($_6ae1e5ae8a4c4) || $_6ae1e5ae8a4c4 instanceof \think\Collection || $_6ae1e5ae8a4c4 instanceof \think\Paginator): if( count($_6ae1e5ae8a4c4)==0 ) : echo "" ;else: foreach($_6ae1e5ae8a4c4 as $key2=>$vo2): ?>
                     <a <?php if($param['area'] == $vo2): ?> class="cur" <?php endif; ?> href="<?php echo mac_url_type($obj,['area'=>$vo2,'lang'=>$param['lang'],'year'=>$param['year'],'level'=>$param['level'],'letter'=>$param['letter'],'state'=>$param['state'],'tag'=>$param['tag'],'class'=>$param['class'],'order'=>$param['order'],'by'=>$param['by'] ],'show'); ?>"><?php echo $vo2; ?></a>
                     <?php endforeach; endif; else: echo "" ;endif; ?>
                 </p>
@@ -92,7 +92,7 @@
                 <div class="con" id="third_list_p">
                     <p>
             <a  {if condition="$param['year'] eq ''"} class="cur" href="<?php echo mac_url_type($obj,['area'=>$param['area'],'lang'=>$param['lang'],'year'=>'','level'=>$param['level'],'letter'=>$param['letter'],'state'=>$param['state'],'tag'=>$param['tag'],'class'=>$param['class'],'order'=>$param['order'],'by'=>$param['by'] ],'show'); ?>">全部</a>
-            <?php $_6ad9e8eed670c=explode(',',$obj['type_extend']['year']); if(is_array($_6ad9e8eed670c) || $_6ad9e8eed670c instanceof \think\Collection || $_6ad9e8eed670c instanceof \think\Paginator): if( count($_6ad9e8eed670c)==0 ) : echo "" ;else: foreach($_6ad9e8eed670c as $key2=>$vo2): ?>
+            <?php $_6ae1e5ae8a495=explode(',',$obj['type_extend']['year']); if(is_array($_6ae1e5ae8a495) || $_6ae1e5ae8a495 instanceof \think\Collection || $_6ae1e5ae8a495 instanceof \think\Paginator): if( count($_6ae1e5ae8a495)==0 ) : echo "" ;else: foreach($_6ae1e5ae8a495 as $key2=>$vo2): ?>
             <a <?php if($param['year'] == $vo2): ?> class="cur" <?php endif; ?> href="<?php echo mac_url_type($obj,['area'=>$param['area'],'lang'=>$param['lang'],'year'=>$vo2,'level'=>$param['level'],'letter'=>$param['letter'],'state'=>$param['state'],'tag'=>$param['tag'],'class'=>$param['class'],'order'=>$param['order'],'by'=>$param['by'] ],'show'); ?>"><?php echo $vo2; ?></a>
             <?php endforeach; endif; else: echo "" ;endif; ?>
                     </p>

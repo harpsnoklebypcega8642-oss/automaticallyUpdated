@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:40:"template/default_wap/html/map/index.html";i:1792571142;s:65:"/www/wwwroot/fundof/template/default_wap/html/public/include.html";i:1792571142;s:62:"/www/wwwroot/fundof/template/default_wap/html/public/head.html";i:1792571142;s:62:"/www/wwwroot/fundof/template/default_wap/html/public/foot.html";i:1792571142;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:40:"template/default_wap/html/map/index.html";i:1793188122;s:65:"/www/wwwroot/fundof/template/default_wap/html/public/include.html";i:1792571142;s:62:"/www/wwwroot/fundof/template/default_wap/html/public/head.html";i:1792571142;s:62:"/www/wwwroot/fundof/template/default_wap/html/public/foot.html";i:1792571142;}*/ ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -46,7 +46,7 @@
 <header class="g_header2 g_header--hero g_header2--hero">
     <a href="javascript:MAC.GoBack()"><i class="moreArrow2"></i>返回</a>
     最新更新
-    <label for="navSwitch" href="javascript:;" class="s_c mac_user"><i class="i_user"><span></span></i></label>
+    <label for="navSwitch" href="javascript:;" class="s_c mac_user"><i class=""><span></span></i></label>
     <label for="navSwitch" href="javascript:;" class="s_r s_bt"><i class="i_bread"><span></span></i></label>
 </header>
 <!--列表部分-->

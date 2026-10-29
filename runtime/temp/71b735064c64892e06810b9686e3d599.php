@@ -10,7 +10,7 @@
                     <i class="icon-face"></i>
                 </div>
                 <div class="comment_face_box face-box">
-                    <?php $__FOR_START_1601479392__=1;$__FOR_END_1601479392__=16;for($i=$__FOR_START_1601479392__;$i <= $__FOR_END_1601479392__;$i+=1){ ?>
+                    <?php $__FOR_START_2036853261__=1;$__FOR_END_2036853261__=16;for($i=$__FOR_START_2036853261__;$i <= $__FOR_END_2036853261__;$i+=1){ ?>
                     <img data-id="<?php echo $i; ?>" src="/static/images/face/<?php echo $i; ?>.gif">
                     <?php } ?>
                 </div>

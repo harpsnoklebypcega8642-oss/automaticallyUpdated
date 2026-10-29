@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:41:"template/default_wap/html/vod/search.html";i:1792571142;s:65:"/www/wwwroot/fundof/template/default_wap/html/public/include.html";i:1792571142;s:62:"/www/wwwroot/fundof/template/default_wap/html/public/head.html";i:1792571142;s:64:"/www/wwwroot/fundof/template/default_wap/html/public/paging.html";i:1792571142;s:62:"/www/wwwroot/fundof/template/default_wap/html/public/foot.html";i:1792571142;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:41:"template/default_wap/html/vod/search.html";i:1793188340;s:65:"/www/wwwroot/fundof/template/default_wap/html/public/include.html";i:1792571142;s:62:"/www/wwwroot/fundof/template/default_wap/html/public/head.html";i:1792571142;s:64:"/www/wwwroot/fundof/template/default_wap/html/public/paging.html";i:1792571142;s:62:"/www/wwwroot/fundof/template/default_wap/html/public/foot.html";i:1792571142;}*/ ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -47,7 +47,7 @@
 <header class="g_header2 g_header--hero g_header2--hero">
     <a href="javascript:MAC.GoBack()"><i class="moreArrow2"></i>返回</a>
     <?php echo $param['wd']; ?><?php echo $param['actor']; ?><?php echo $param['director']; ?><?php echo $param['area']; ?><?php echo $param['lang']; ?><?php echo $param['year']; ?><?php echo $param['class']; ?>搜索结果
-    <label for="navSwitch" href="javascript:;" class="s_c mac_user"><i class="i_user"><span></span></i></label>
+    <label for="navSwitch" href="javascript:;" class="s_c mac_user"><i class=""><span></span></i></label>
     <label for="navSwitch" href="javascript:;" class="s_r s_bt"><i class="i_bread"><span></span></i></label>
 </header>
 <!--搜索结果-->

@@ -14,3 +14,4 @@ nohup*
 node_modules/
 application/data/install/install.lock
 runtime/*.php
+application/extra/*

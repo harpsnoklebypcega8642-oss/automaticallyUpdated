@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:42:"template/default_wap/html/index/index.html";i:1792571142;s:65:"/www/wwwroot/fundof/template/default_wap/html/public/include.html";i:1792571142;s:62:"/www/wwwroot/fundof/template/default_wap/html/public/head.html";i:1792571142;s:62:"/www/wwwroot/fundof/template/default_wap/html/public/foot.html";i:1792571142;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:42:"template/default_wap/html/index/index.html";i:1793188011;s:65:"/www/wwwroot/fundof/template/default_wap/html/public/include.html";i:1792571142;s:62:"/www/wwwroot/fundof/template/default_wap/html/public/head.html";i:1792571142;s:62:"/www/wwwroot/fundof/template/default_wap/html/public/foot.html";i:1792571142;}*/ ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -48,7 +48,7 @@
 
 <header class="g_header g_header--hero">
     <!-- <h1 class="s_l g_logo"><a href="<?php echo $maccms['path']; ?>"><img src="<?php echo mac_url_img($maccms['site_logo']); ?>"></a></h1> -->
-    <label for="navSwitch" href="javascript:;" class="s_c mac_user"><i class="i_user"><span></span></i></label>
+    <label for="navSwitch" href="javascript:;" class="s_c mac_user"><i class=""><span></span></i></label>
     <label for="navSwitch" href="javascript:;" class="s_r s_bt"><i class="i_bread"><span></span></i></label>
 </header>
 <!-- banner 开始 -->
@@ -77,7 +77,7 @@
         </div>
         <div class="homeRecommendBody">
             <ul class="homeRecommendGrid">
-                <?php $__TAG__ = '{"num":"9","type":"1,2,3,4","order":"desc","by":"time","id":"vo","key":"key"}';$__LIST__ = model("Vod")->listCacheData($__TAG__); if(is_array($__LIST__['list']) || $__LIST__['list'] instanceof \think\Collection || $__LIST__['list'] instanceof \think\Paginator): $key = 0; $__LIST__ = $__LIST__['list'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($key % 2 );++$key;?>
+                <?php $__TAG__ = '{"num":"36","type":"1,2,3,4","order":"desc","by":"time","id":"vo","key":"key"}';$__LIST__ = model("Vod")->listCacheData($__TAG__); if(is_array($__LIST__['list']) || $__LIST__['list'] instanceof \think\Collection || $__LIST__['list'] instanceof \think\Paginator): $key = 0; $__LIST__ = $__LIST__['list'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($key % 2 );++$key;?>
                 <li class="homeRecommendItem">
                     <a href="<?php echo mac_url_vod_detail($vo); ?>" title="<?php echo $vo['vod_name']; ?>">
                         <span class="homeRecommendPoster">

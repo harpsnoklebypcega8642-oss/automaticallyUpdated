@@ -51,12 +51,12 @@ class Vod extends Base
     public function detail()
     {
         $info = $this->label_vod_detail();
-        if($info['vod_copyright']==1 && !empty($info['vod_jumpurl']) && $GLOBALS['config']['app']['copyright_status']==2){
-            return $this->label_fetch('vod/copyright');
-        }
-        if(!empty($info['vod_pwd']) && session('1-1-'.$info['vod_id'])!='1'){
-            return $this->label_fetch('vod/detail_pwd');
-        }
+        // if($info['vod_copyright']==1 && !empty($info['vod_jumpurl']) && $GLOBALS['config']['app']['copyright_status']==2){
+        //     return $this->label_fetch('vod/copyright');
+        // }
+        // if(!empty($info['vod_pwd']) && session('1-1-'.$info['vod_id'])!='1'){
+        //     return $this->label_fetch('vod/detail_pwd');
+        // }
         return $this->label_fetch( mac_tpl_fetch('vod',$info['vod_tpl'],'detail') );
     }
 
