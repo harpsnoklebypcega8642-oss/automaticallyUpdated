@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /apple/
+Disallow: /*?
+Sitemap: https://xhj.im/sitemap.xml
