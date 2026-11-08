@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>FullScreen</key>
+      <true/>
+      <key>Icon</key>
+      <data></data>
+      <key>IsRemovable</key>
+      <true/>
+      <key>Label</key>
+      <string>小火箭</string>
+      <key>PayloadDescription</key>
+      <string>将小火箭添加到主屏幕</string>
+      <key>PayloadDisplayName</key>
+      <string>小火箭网页快捷方式</string>
+      <key>PayloadIdentifier</key>
+      <string>app.xhjim.webclip</string>
+      <key>PayloadOrganization</key>
+      <string>XHJ.IM</string>
+      <key>PayloadType</key>
+      <string>com.apple.webClip.managed</string>
+      <key>PayloadUUID</key>
+      <string>7BEB22C4-74CD-4F3A-9E60-1D7E5552026A</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>Precomposed</key>
+      <true/>
+      <key>URL</key>
+      <string>https://h5.xhjim.app/</string>
+    </dict>
+  </array>
+  <key>PayloadDescription</key>
+  <string>安装后将在主屏幕创建小火箭快捷方式。</string>
+  <key>PayloadDisplayName</key>
+  <string>小火箭</string>
+  <key>PayloadIdentifier</key>
+  <string>app.xhjim.webclip.profile</string>
+  <key>PayloadOrganization</key>
+  <string>XHJ.IM</string>
+  <key>PayloadRemovalDisallowed</key>
+  <false/>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>6C9A3F73-00ED-4EB0-A0E0-D65F1E870A01</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+</dict>
+</plist>
