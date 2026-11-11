@@ -3,6 +3,7 @@
   let initialized = null;
   let oneSignal = null;
   let currentExternalId = '';
+  const sdkLoadTimeoutMs = 12000;
 
   function isIos() {
     return /iphone|ipad|ipod/i.test(navigator.userAgent || '');
@@ -38,9 +39,13 @@
   function initialize() {
     if (initialized) return initialized;
 
-    initialized = new Promise((resolve, reject) => {
+    const attempt = new Promise((resolve, reject) => {
+      let settled = false;
+      let script = null;
+      let timeoutId = null;
       window.OneSignalDeferred = window.OneSignalDeferred || [];
-      window.OneSignalDeferred.push(async function (sdk) {
+      const deferredInit = async function (sdk) {
+        if (settled) return;
         try {
           await sdk.init({
             appId: appId,
@@ -50,19 +55,42 @@
             notifyButton: { enable: false },
           });
           oneSignal = sdk;
+          settled = true;
+          window.clearTimeout(timeoutId);
           resolve(asJson());
         } catch (error) {
+          settled = true;
+          window.clearTimeout(timeoutId);
           reject(error);
         }
-      });
+      };
+      window.OneSignalDeferred.push(deferredInit);
 
-      const script = document.createElement('script');
+      function fail(error) {
+        if (settled) return;
+        settled = true;
+        window.clearTimeout(timeoutId);
+        const deferredIndex = window.OneSignalDeferred.indexOf(deferredInit);
+        if (deferredIndex >= 0) window.OneSignalDeferred.splice(deferredIndex, 1);
+        if (script) script.remove();
+        reject(error);
+      }
+
+      script = document.createElement('script');
       script.src = 'https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';
-      script.defer = true;
-      script.onerror = () => reject(new Error('Unable to load OneSignal Web SDK'));
+      script.async = true;
+      script.onerror = () => fail(new Error('Unable to load OneSignal Web SDK'));
       document.head.appendChild(script);
+      timeoutId = window.setTimeout(() => {
+        fail(new Error('OneSignal Web SDK load timed out'));
+      }, sdkLoadTimeoutMs);
     });
 
+    initialized = attempt.catch((error) => {
+      initialized = null;
+      oneSignal = null;
+      throw error;
+    });
     return initialized;
   }
 
@@ -110,5 +138,13 @@
       currentExternalId = '';
     }),
     syncBadge,
+    hideBootstrapSplash: () => {
+      const splash = document.getElementById('xhj-bootstrap-splash');
+      if (splash) {
+        splash.classList.add('is-hidden');
+        window.setTimeout(() => splash.remove(), 250);
+      }
+      window.dispatchEvent(new Event('xhj:flutter-first-frame'));
+    },
   };
 })();
