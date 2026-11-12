@@ -15,8 +15,12 @@
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
-  <base href="$FLUTTER_BASE_HREF">
-  <link rel="preload" href="main.dart.js" as="script">
+  <base href="/">
+  <script>
+    if (window.performance && typeof window.performance.mark === 'function') {
+      window.performance.mark('xhj:html-entry');
+    }
+  </script>
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
