@@ -125,6 +125,16 @@
     },
     requestPermission: async () => {
       if (isIos() && !isStandalone()) return asJson();
+
+      // Permission is intentionally requested only from the Settings page.
+      // Do not call the browser prompt again when the browser has already
+      // resolved the permission, especially after a previous denial.
+      await initialize();
+      const currentPermission = status().permission;
+      if (currentPermission === 'granted' || currentPermission === 'denied') {
+        return asJson();
+      }
+
       return withSdk(async (sdk) => sdk.Notifications.requestPermission());
     },
     login: (externalId) => withSdk(async (sdk) => {
