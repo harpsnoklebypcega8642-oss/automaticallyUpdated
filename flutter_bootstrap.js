@@ -41,7 +41,7 @@ _flutter.buildConfig = {"engineRevision":"587c18f873b8ab57330422bce09047420d9c7f
 _flutter.loader.load();
 
 if ('serviceWorker' in navigator) {
-  var serviceWorkerVersion = "2184448508";
+  var serviceWorkerVersion = "752931107";
   navigator.serviceWorker
     .register('flutter_service_worker.js?v=' + serviceWorkerVersion)
     .catch(function (error) {
