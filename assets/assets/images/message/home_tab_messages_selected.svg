@@ -1,0 +1,15 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 35784">
+<g id="Rectangle 4328">
+</g>
+<path id="Vector" d="M34.2412 5C39.3077 5 43.453 9.1 43.453 14.1111V34.8889L47.5983 40.3556C48.2892 41.2667 48.0589 42.8611 47.1377 43.5444C46.6771 43.7722 46.2165 44 45.7559 44H11.2118C6.1453 44 2 39.9 2 34.8889V14.1111C2 9.1 6.1453 5 11.2118 5H34.2412Z" fill="url(#paint0_linear_0_10)"/>
+<rect id="Rectangle 4351" x="19" y="18" width="11.75" height="4" rx="2" transform="rotate(90 19 18)" fill="white"/>
+<rect id="Rectangle 4352" x="32" y="18" width="11.75" height="4" rx="2" transform="rotate(90 32 18)" fill="white"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_10" x1="2" y1="5" x2="40.4746" y2="50.3803" gradientUnits="userSpaceOnUse">
+<stop stop-color="#0346E6"/>
+<stop offset="1" stop-color="#8C68F8"/>
+</linearGradient>
+</defs>
+</svg>
